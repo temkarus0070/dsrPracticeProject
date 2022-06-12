@@ -1,8 +1,8 @@
 package org.temkarus0070.dsrpracticeproject.entities;
 
 public enum Mark {
-    ОТЛИЧНО,
-    ХОРОШО,
+    НЕУДОВЛЕТВОРИТЕЛЬНО,
     УДОВЛЕТВОРИТЕЛЬНО,
-    НЕУДОВЛЕТВОРИТЕЛЬНО
+    ХОРОШО,
+    ОТЛИЧНО
 }

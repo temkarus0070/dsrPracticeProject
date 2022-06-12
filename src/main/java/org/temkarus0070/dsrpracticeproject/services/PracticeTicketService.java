@@ -23,7 +23,7 @@ public class PracticeTicketService {
     }
 
     public List<PracticeTicketProjection> getAll() {
-        return practiceTicketRepository.findAllBy();
+        return practiceTicketRepository.findAllPracticeTicketBy();
     }
 
     public List<PracticeTicketProjection> getAllTicketsAssignedToMentor(long mentorId) {

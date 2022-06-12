@@ -16,8 +16,7 @@ public interface PracticeTicketRepository extends JpaRepository<PracticeTicket, 
     @EntityGraph("practiceTickerGraph")
     PracticeTicketProjection findPracticeTicketById(PracticeTicket.PracticeTicketId id);
 
-    @EntityGraph("practiceTickerGraph")
-    List<PracticeTicketProjection> findAllBy();
+    List<PracticeTicketProjection> findAllPracticeTicketBy();
 
     @EntityGraph("practiceTickerGraph")
     List<PracticeTicketProjection> findAllByOrderByRecommendToHireAscFinalMarkAsc();
