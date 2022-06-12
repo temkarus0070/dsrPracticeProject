@@ -1,8 +1,6 @@
 package org.temkarus0070.dsrpracticeproject.entities;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -14,6 +12,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@NamedEntityGraph(name = "practiceTickerGraph", includeAllAttributes = true)
 public class PracticeTicket {
     @EmbeddedId
     private PracticeTicketId id;
@@ -23,17 +22,17 @@ public class PracticeTicket {
     @ManyToOne
     @MapsId(value = "studentId")
     private Student student;
+
     private String programmingLanguage;
-    private LocalDate beginOfPractice;
-    private LocalDate endOfPractice;
+
     private String taskName;
     @OneToMany
     private Set<WeeklyStudyReview> weeklyMentorReviews;
     @OneToOne
     private FinalStudyReview finalMentorReview;
     private boolean isRecommendToHire;
-    @Enumerated(value = EnumType.STRING)
-    private Mark mark;
+    @Enumerated(value = EnumType.ORDINAL)
+    private Mark finalMark;
 
     @Override
     public boolean equals(Object o) {
@@ -50,8 +49,13 @@ public class PracticeTicket {
 
     @Embeddable
     @EqualsAndHashCode
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class PracticeTicketId implements Serializable {
         private long mentorId;
         private long studentId;
+        private String programmingLanguage;
+        private LocalDate beginOfPractice;
+        private LocalDate endOfPractice;
     }
 }
