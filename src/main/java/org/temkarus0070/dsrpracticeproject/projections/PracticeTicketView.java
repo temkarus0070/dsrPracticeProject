@@ -5,7 +5,7 @@ import org.temkarus0070.dsrpracticeproject.entities.PracticeTicket;
 
 import java.util.Set;
 
-public interface PracticeTicketProjection {
+public interface PracticeTicketView {
     PracticeTicket.PracticeTicketId getId();
 
     MentorView getMentor();

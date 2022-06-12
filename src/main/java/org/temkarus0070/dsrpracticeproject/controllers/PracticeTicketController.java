@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.temkarus0070.dsrpracticeproject.PracticeTicketStats;
 import org.temkarus0070.dsrpracticeproject.entities.PracticeTicket;
-import org.temkarus0070.dsrpracticeproject.projections.PracticeTicketProjection;
+import org.temkarus0070.dsrpracticeproject.projections.PracticeResultView;
+import org.temkarus0070.dsrpracticeproject.projections.PracticeTicketView;
 import org.temkarus0070.dsrpracticeproject.services.PracticeTicketService;
 
 import java.time.LocalDate;
@@ -20,25 +21,30 @@ public class PracticeTicketController {
     private PracticeTicketService practiceTicketService;
 
     @GetMapping
-    public PracticeTicketProjection get(@RequestParam long mentorId, @RequestParam long studentId, @RequestParam String programmingLanguage, @RequestParam LocalDate beginOfPractice,
-                                        @RequestParam LocalDate endOfPractice) {
+    public PracticeTicketView get(@RequestParam long mentorId, @RequestParam long studentId, @RequestParam String programmingLanguage, @RequestParam LocalDate beginOfPractice,
+                                  @RequestParam LocalDate endOfPractice) {
         PracticeTicket.PracticeTicketId practiceTicketId = new PracticeTicket.PracticeTicketId(mentorId, studentId, programmingLanguage, beginOfPractice, endOfPractice);
         return practiceTicketService.get(practiceTicketId);
     }
 
     @GetMapping("/all")
-    public List<PracticeTicketProjection> list() {
+    public List<PracticeTicketView> list() {
         return practiceTicketService.getAll();
     }
 
     @GetMapping("/assignedToMentor")
-    public List<PracticeTicketProjection> practiceTicketsOfMentor(long mentorId) {
+    public List<PracticeTicketView> practiceTicketsOfMentor(long mentorId) {
         return practiceTicketService.getAll();
     }
 
     @GetMapping("/practiceStats")
     public PracticeTicketStats getStats() {
         return practiceTicketService.getStatsByPractice();
+    }
+
+    @GetMapping("/studentsRating")
+    public List<PracticeResultView> getRating() {
+        return practiceTicketService.getRatingOfStudents();
     }
 
 }

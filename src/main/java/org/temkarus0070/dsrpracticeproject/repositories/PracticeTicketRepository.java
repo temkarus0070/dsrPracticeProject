@@ -5,31 +5,31 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.temkarus0070.dsrpracticeproject.entities.PracticeTicket;
-import org.temkarus0070.dsrpracticeproject.projections.MentorStudentsStatsProjection;
-import org.temkarus0070.dsrpracticeproject.projections.PracticeTicketProjection;
-import org.temkarus0070.dsrpracticeproject.projections.ProgrammingLanguageStatsProjection;
+import org.temkarus0070.dsrpracticeproject.projections.MentorStudentsStatsView;
+import org.temkarus0070.dsrpracticeproject.projections.PracticeResultView;
+import org.temkarus0070.dsrpracticeproject.projections.PracticeTicketView;
+import org.temkarus0070.dsrpracticeproject.projections.ProgrammingLanguageStatsView;
 
 import java.util.List;
 
 @Repository
 public interface PracticeTicketRepository extends JpaRepository<PracticeTicket, PracticeTicket.PracticeTicketId> {
     @EntityGraph("practiceTickerGraph")
-    PracticeTicketProjection findPracticeTicketById(PracticeTicket.PracticeTicketId id);
+    PracticeTicketView findPracticeTicketById(PracticeTicket.PracticeTicketId id);
 
     @EntityGraph("practiceTickerGraph")
-    List<PracticeTicketProjection> findAllPracticeTicketBy();
+    List<PracticeTicketView> findAllPracticeTicketBy();
 
-    @EntityGraph("practiceTickerGraph")
-    List<PracticeTicketProjection> findAllByOrderByRecommendToHireAscFinalMarkAsc();
+    List<PracticeResultView> findAllByOrderByRecommendToHireDescFinalMarkDesc();
 
     @Query(value = "SELECT t.mentor.id as mentorId,t.mentor.fullName as fullName,count(t.id.studentId) as studentsCount,SUM(CASE when t.recommendToHire is true then  1 else 0 end)as successStudentsCount" +
             "  from PracticeTicket t  group by t.mentor.id,t.mentor.fullName")
-    List<MentorStudentsStatsProjection> findStatsByMentors();
+    List<MentorStudentsStatsView> findStatsByMentors();
 
     @Query(value = "SELECT pt.id.programmingLanguage as language,count(pt.student) as count from PracticeTicket pt group by pt.id.programmingLanguage")
-    List<ProgrammingLanguageStatsProjection> findStatsByProgrammingLanguages();
+    List<ProgrammingLanguageStatsView> findStatsByProgrammingLanguages();
 
     @EntityGraph("practiceTickerGraph")
-    List<PracticeTicketProjection> findAllById_MentorId(long mentorId);
+    List<PracticeTicketView> findAllById_MentorId(long mentorId);
 
 }

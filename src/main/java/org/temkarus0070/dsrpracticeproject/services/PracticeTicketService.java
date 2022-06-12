@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.temkarus0070.dsrpracticeproject.PracticeTicketStats;
 import org.temkarus0070.dsrpracticeproject.entities.PracticeTicket;
-import org.temkarus0070.dsrpracticeproject.projections.MentorStudentsStatsProjection;
-import org.temkarus0070.dsrpracticeproject.projections.PracticeTicketProjection;
-import org.temkarus0070.dsrpracticeproject.projections.ProgrammingLanguageStatsProjection;
+import org.temkarus0070.dsrpracticeproject.projections.MentorStudentsStatsView;
+import org.temkarus0070.dsrpracticeproject.projections.PracticeResultView;
+import org.temkarus0070.dsrpracticeproject.projections.PracticeTicketView;
+import org.temkarus0070.dsrpracticeproject.projections.ProgrammingLanguageStatsView;
 import org.temkarus0070.dsrpracticeproject.repositories.PracticeTicketRepository;
 
 import javax.persistence.EntityNotFoundException;
@@ -21,25 +22,25 @@ public class PracticeTicketService {
         practiceTicketRepository.save(practiceTicket);
     }
 
-    public PracticeTicketProjection get(PracticeTicket.PracticeTicketId practiceTicketId) {
+    public PracticeTicketView get(PracticeTicket.PracticeTicketId practiceTicketId) {
         return practiceTicketRepository.findPracticeTicketById(practiceTicketId);
     }
 
-    public List<PracticeTicketProjection> getAll() {
+    public List<PracticeTicketView> getAll() {
         return practiceTicketRepository.findAllPracticeTicketBy();
     }
 
-    public List<PracticeTicketProjection> getAllTicketsAssignedToMentor(long mentorId) {
+    public List<PracticeTicketView> getAllTicketsAssignedToMentor(long mentorId) {
         return practiceTicketRepository.findAllById_MentorId(mentorId);
     }
 
-    public List<PracticeTicketProjection> getAllTicketsSortedByStudiedResults() {
-        return practiceTicketRepository.findAllByOrderByRecommendToHireAscFinalMarkAsc();
+    public List<PracticeResultView> getRatingOfStudents() {
+        return practiceTicketRepository.findAllByOrderByRecommendToHireDescFinalMarkDesc();
     }
 
     public PracticeTicketStats getStatsByPractice() {
-        List<MentorStudentsStatsProjection> statsByMentors = practiceTicketRepository.findStatsByMentors();
-        List<ProgrammingLanguageStatsProjection> statsByProgrammingLanguages = practiceTicketRepository.findStatsByProgrammingLanguages();
+        List<MentorStudentsStatsView> statsByMentors = practiceTicketRepository.findStatsByMentors();
+        List<ProgrammingLanguageStatsView> statsByProgrammingLanguages = practiceTicketRepository.findStatsByProgrammingLanguages();
         return new PracticeTicketStats(statsByMentors, statsByProgrammingLanguages);
     }
 

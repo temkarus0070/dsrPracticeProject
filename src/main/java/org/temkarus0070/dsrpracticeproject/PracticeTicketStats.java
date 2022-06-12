@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.temkarus0070.dsrpracticeproject.projections.MentorStudentsStatsProjection;
-import org.temkarus0070.dsrpracticeproject.projections.ProgrammingLanguageStatsProjection;
+import org.temkarus0070.dsrpracticeproject.projections.MentorStudentsStatsView;
+import org.temkarus0070.dsrpracticeproject.projections.ProgrammingLanguageStatsView;
 
 import java.util.List;
 
@@ -14,6 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PracticeTicketStats {
-    private List<MentorStudentsStatsProjection> mentorStudentsStats;
-    private List<ProgrammingLanguageStatsProjection> programmingLanguageStats;
+    private List<MentorStudentsStatsView> mentorStudentsStats;
+    private List<ProgrammingLanguageStatsView> programmingLanguageStats;
 }
