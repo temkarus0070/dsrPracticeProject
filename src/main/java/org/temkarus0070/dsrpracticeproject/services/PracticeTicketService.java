@@ -31,7 +31,7 @@ public class PracticeTicketService {
     }
 
     public List<PracticeTicketProjection> getAllTicketsSortedByStudiedResults() {
-
+return practiceTicketRepository.findAllByOrderByRecommendToHireAscFinalMarkAsc();
     }
 
     public void update(PracticeTicket practiceTicket) {

@@ -4,13 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.util.Objects;
 
-@Entity
+@MappedSuperclass
 @Getter
 @Setter
 public class StudyReview {

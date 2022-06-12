@@ -20,7 +20,7 @@ public class Student extends Person {
 
     private int testResult;
 
-    @OneToMany
+    @OneToMany(mappedBy = "student")
     private Set<PracticeTicket> practiceTickets;
 
     @Override

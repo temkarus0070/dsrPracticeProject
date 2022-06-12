@@ -22,11 +22,11 @@ public interface PracticeTicketRepository extends JpaRepository<PracticeTicket, 
     @EntityGraph("practiceTickerGraph")
     List<PracticeTicketProjection> findAllByOrderByRecommendToHireAscFinalMarkAsc();
 
-    @Query(value = "SELECT t.mentor.id,t.mentor.fullName,count(t.id.studentId) as studentsCount,count(CASE WHEN t.isRecommendToHire is true then 1 else 0)as successCount" +
+    @Query(value = "SELECT t.mentor.id,t.mentor.fullName,count(t.id.studentId) as studentsCount,count(1)as successCount" +
             "  from PracticeTicket t join t.mentor group by t.mentor")
     List<MentorStudentsStatsProjection> findStatsByMentors();
 
-    @Query(value = "SELECT pt.programmingLanguage as language,count(pt.student) as count from PracticeTicket pt group by pt.programmingLanguage")
+    @Query(value = "SELECT pt.id.programmingLanguage as language,count(pt.student) as count from PracticeTicket pt group by pt.id.programmingLanguage")
     List<ProgrammingLanguageStatsProjection> findStatsByProgrammingLanguages();
 
     @EntityGraph("practiceTickerGraph")

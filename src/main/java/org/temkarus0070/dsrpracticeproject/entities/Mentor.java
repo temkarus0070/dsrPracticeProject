@@ -14,7 +14,7 @@ import java.util.Set;
 @Setter
 public class Mentor extends Person {
     private String jobName;
-    @OneToMany
+    @OneToMany(mappedBy = "mentor")
     private Set<PracticeTicket> practiceTickets;
 
     @Override

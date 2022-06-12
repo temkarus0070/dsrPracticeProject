@@ -1,6 +1,9 @@
 package org.temkarus0070.dsrpracticeproject.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -16,21 +19,21 @@ import java.util.Set;
 public class PracticeTicket {
     @EmbeddedId
     private PracticeTicketId id;
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(insertable = false, updatable = false, name = "mentor_id")
     @MapsId(value = "mentorId")
     private Mentor mentor;
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "student_id", insertable = false, updatable = false)
     @MapsId(value = "studentId")
     private Student student;
 
-    private String programmingLanguage;
-
     private String taskName;
-    @OneToMany
+    @OneToMany(mappedBy = "practiceTicket")
     private Set<WeeklyStudyReview> weeklyMentorReviews;
     @OneToOne
     private FinalStudyReview finalMentorReview;
-    private boolean isRecommendToHire;
+    private boolean recommendToHire;
     @Enumerated(value = EnumType.ORDINAL)
     private Mark finalMark;
 
@@ -47,15 +50,31 @@ public class PracticeTicket {
         return Objects.hash(id);
     }
 
-    @Embeddable
-    @EqualsAndHashCode
+
     @AllArgsConstructor
     @NoArgsConstructor
+    @Getter
+    @Setter
     public static class PracticeTicketId implements Serializable {
+        @Column(name = "mentor_id")
         private long mentorId;
+        @Column(name = "student_id")
         private long studentId;
         private String programmingLanguage;
         private LocalDate beginOfPractice;
         private LocalDate endOfPractice;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            PracticeTicketId that = (PracticeTicketId) o;
+            return mentorId == that.mentorId && studentId == that.studentId && programmingLanguage.equals(that.programmingLanguage) && beginOfPractice.equals(that.beginOfPractice) && endOfPractice.equals(that.endOfPractice);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(mentorId, studentId, programmingLanguage, beginOfPractice, endOfPractice);
+        }
     }
 }

@@ -12,7 +12,6 @@ public interface PracticeTicketProjection {
 
     StudentView getStudent();
 
-    String getProgrammingLanguage();
 
     String getTaskName();
 
