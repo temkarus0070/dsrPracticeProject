@@ -20,11 +20,9 @@ public class PracticeTicket {
     @EmbeddedId
     private PracticeTicketId id;
     @ManyToOne(optional = false)
-    @JoinColumn(insertable = false, updatable = false, name = "mentor_id")
     @MapsId(value = "mentorId")
     private Mentor mentor;
     @ManyToOne(optional = false)
-    @JoinColumn(name = "student_id", insertable = false, updatable = false)
     @MapsId(value = "studentId")
     private Student student;
 
@@ -56,9 +54,7 @@ public class PracticeTicket {
     @Getter
     @Setter
     public static class PracticeTicketId implements Serializable {
-        @Column(name = "mentor_id")
         private long mentorId;
-        @Column(name = "student_id")
         private long studentId;
         private String programmingLanguage;
         private LocalDate beginOfPractice;
