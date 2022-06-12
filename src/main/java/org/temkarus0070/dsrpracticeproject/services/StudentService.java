@@ -34,7 +34,7 @@ public class StudentService {
     }
 
     public StudentView get(long id) {
-        return studentRepository.getById(id);
+        return studentRepository.getStudentById(id);
     }
 
     public List<StudentView> getAll() {
