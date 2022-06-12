@@ -5,30 +5,29 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class Student extends Person {
+public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    private int studyCourse;
+    private String fullName;
 
-    private String studyGroup;
-
-    private int testResult;
-
-    @OneToMany
-    private Set<PracticeTicket> practiceTickets;
+    private String contactData;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Student student = (Student) o;
-        return Objects.equals(getId(), student.getId());
+        Person person = (Person) o;
+        return Objects.equals(id, person.id);
     }
 
     @Override

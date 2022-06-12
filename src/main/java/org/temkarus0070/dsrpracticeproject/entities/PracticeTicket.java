@@ -1,20 +1,22 @@
 package org.temkarus0070.dsrpracticeproject.entities;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.Period;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class StudentPracticeTicket {
+public class PracticeTicket {
     @EmbeddedId
-    private StudentPracticeTicketId id;
+    private PracticeTicketId id;
     @ManyToOne
     @MapsId(value = "mentorId")
     private Mentor mentor;
@@ -33,8 +35,22 @@ public class StudentPracticeTicket {
     @Enumerated(value = EnumType.STRING)
     private Mark mark;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        PracticeTicket that = (PracticeTicket) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     @Embeddable
-    public static class StudentPracticeTicketId implements Serializable {
+    @EqualsAndHashCode
+    public static class PracticeTicketId implements Serializable {
         private long mentorId;
         private long studentId;
     }

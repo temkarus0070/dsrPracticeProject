@@ -1,11 +1,6 @@
 package org.temkarus0070.dsrpracticeproject.projections;
 
-public interface StudentView {
-    long getId();
-
-    String getContactData();
-
-    String getFullName();
+public interface StudentView extends PersonView {
 
     int getStudyCourse();
 

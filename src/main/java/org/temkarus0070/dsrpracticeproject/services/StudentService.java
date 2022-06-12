@@ -7,6 +7,7 @@ import org.temkarus0070.dsrpracticeproject.projections.StudentView;
 import org.temkarus0070.dsrpracticeproject.repositories.StudentRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,7 +29,15 @@ public class StudentService {
         student1.setTestResult(student.getTestResult());
     }
 
+    public void delete(long id) {
+        studentRepository.deleteById(id);
+    }
+
     public StudentView get(long id) {
         return studentRepository.getById(id);
+    }
+
+    public List<StudentView> getAll() {
+        return studentRepository.getAllBy();
     }
 }
