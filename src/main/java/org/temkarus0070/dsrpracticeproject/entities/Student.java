@@ -6,6 +6,8 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,6 +20,8 @@ public class Student extends Person {
 
     private String studyGroup;
 
+    @Min(0)
+    @Max(100)
     private int testResult;
 
     @OneToMany(mappedBy = "student")

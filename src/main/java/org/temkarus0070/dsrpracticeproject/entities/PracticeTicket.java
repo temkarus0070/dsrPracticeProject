@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -19,19 +20,25 @@ import java.util.Set;
 public class PracticeTicket {
     @EmbeddedId
     private PracticeTicketId id;
+
     @ManyToOne(optional = false)
     @MapsId(value = "mentorId")
     private Mentor mentor;
+
     @ManyToOne(optional = false)
     @MapsId(value = "studentId")
     private Student student;
 
+    @NotNull
     private String taskName;
+
     @OneToMany(mappedBy = "practiceTicket")
     private Set<WeeklyStudyReview> weeklyMentorReviews;
+
     @OneToOne
     private FinalStudyReview finalMentorReview;
     private boolean recommendToHire;
+
     @Enumerated(value = EnumType.ORDINAL)
     private Mark finalMark;
 

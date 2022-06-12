@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
@@ -13,7 +14,9 @@ import java.util.Set;
 @Getter
 @Setter
 public class Mentor extends Person {
+    @NotNull
     private String jobName;
+
     @OneToMany(mappedBy = "mentor")
     private Set<PracticeTicket> practiceTickets;
 

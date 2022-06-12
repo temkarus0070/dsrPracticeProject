@@ -12,7 +12,7 @@ import java.util.Objects;
 @Getter
 @Setter
 public class WeeklyStudyReview extends StudyReview {
-    @ManyToOne
+    @ManyToOne(optional = false)
     private PracticeTicket practiceTicket;
 
     @Override
