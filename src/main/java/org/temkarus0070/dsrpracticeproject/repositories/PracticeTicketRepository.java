@@ -15,7 +15,7 @@ import java.util.List;
 public interface PracticeTicketRepository extends JpaRepository<PracticeTicket, PracticeTicket.PracticeTicketId> {
     @EntityGraph("practiceTickerGraph")
     PracticeTicketProjection findPracticeTicketById(PracticeTicket.PracticeTicketId id);
-
+    @EntityGraph("practiceTickerGraph")
     List<PracticeTicketProjection> findAllPracticeTicketBy();
 
     @EntityGraph("practiceTickerGraph")
