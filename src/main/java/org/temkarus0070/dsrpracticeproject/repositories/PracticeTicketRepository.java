@@ -15,14 +15,15 @@ import java.util.List;
 public interface PracticeTicketRepository extends JpaRepository<PracticeTicket, PracticeTicket.PracticeTicketId> {
     @EntityGraph("practiceTickerGraph")
     PracticeTicketProjection findPracticeTicketById(PracticeTicket.PracticeTicketId id);
+
     @EntityGraph("practiceTickerGraph")
     List<PracticeTicketProjection> findAllPracticeTicketBy();
 
     @EntityGraph("practiceTickerGraph")
     List<PracticeTicketProjection> findAllByOrderByRecommendToHireAscFinalMarkAsc();
 
-    @Query(value = "SELECT t.mentor.id,t.mentor.fullName,count(t.id.studentId) as studentsCount,count(1)as successCount" +
-            "  from PracticeTicket t join t.mentor group by t.mentor")
+    @Query(value = "SELECT t.mentor.id as mentorId,t.mentor.fullName as fullName,count(t.id.studentId) as studentsCount,SUM(CASE when t.recommendToHire is true then  1 else 0 end)as successStudentsCount" +
+            "  from PracticeTicket t  group by t.mentor.id,t.mentor.fullName")
     List<MentorStudentsStatsProjection> findStatsByMentors();
 
     @Query(value = "SELECT pt.id.programmingLanguage as language,count(pt.student) as count from PracticeTicket pt group by pt.id.programmingLanguage")

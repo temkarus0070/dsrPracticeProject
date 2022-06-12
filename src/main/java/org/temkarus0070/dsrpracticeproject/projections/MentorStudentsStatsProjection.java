@@ -4,4 +4,8 @@ public interface MentorStudentsStatsProjection {
     long getStudentsCount();
 
     long getMentorId();
+
+    String getFullName();
+
+    long getSuccessStudentsCount();
 }

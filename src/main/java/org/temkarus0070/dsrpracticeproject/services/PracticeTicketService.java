@@ -2,8 +2,11 @@ package org.temkarus0070.dsrpracticeproject.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.temkarus0070.dsrpracticeproject.PracticeTicketStats;
 import org.temkarus0070.dsrpracticeproject.entities.PracticeTicket;
+import org.temkarus0070.dsrpracticeproject.projections.MentorStudentsStatsProjection;
 import org.temkarus0070.dsrpracticeproject.projections.PracticeTicketProjection;
+import org.temkarus0070.dsrpracticeproject.projections.ProgrammingLanguageStatsProjection;
 import org.temkarus0070.dsrpracticeproject.repositories.PracticeTicketRepository;
 
 import javax.persistence.EntityNotFoundException;
@@ -31,7 +34,13 @@ public class PracticeTicketService {
     }
 
     public List<PracticeTicketProjection> getAllTicketsSortedByStudiedResults() {
-return practiceTicketRepository.findAllByOrderByRecommendToHireAscFinalMarkAsc();
+        return practiceTicketRepository.findAllByOrderByRecommendToHireAscFinalMarkAsc();
+    }
+
+    public PracticeTicketStats getStatsByPractice() {
+        List<MentorStudentsStatsProjection> statsByMentors = practiceTicketRepository.findStatsByMentors();
+        List<ProgrammingLanguageStatsProjection> statsByProgrammingLanguages = practiceTicketRepository.findStatsByProgrammingLanguages();
+        return new PracticeTicketStats(statsByMentors, statsByProgrammingLanguages);
     }
 
     public void update(PracticeTicket practiceTicket) {

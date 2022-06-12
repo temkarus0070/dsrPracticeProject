@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.temkarus0070.dsrpracticeproject.PracticeTicketStats;
 import org.temkarus0070.dsrpracticeproject.entities.PracticeTicket;
 import org.temkarus0070.dsrpracticeproject.projections.PracticeTicketProjection;
 import org.temkarus0070.dsrpracticeproject.services.PracticeTicketService;
@@ -33,6 +34,11 @@ public class PracticeTicketController {
     @GetMapping("/assignedToMentor")
     public List<PracticeTicketProjection> practiceTicketsOfMentor(long mentorId) {
         return practiceTicketService.getAll();
+    }
+
+    @GetMapping("/practiceStats")
+    public PracticeTicketStats getStats() {
+        return practiceTicketService.getStatsByPractice();
     }
 
 }
