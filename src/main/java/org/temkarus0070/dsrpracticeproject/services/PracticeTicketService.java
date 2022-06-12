@@ -31,7 +31,7 @@ public class PracticeTicketService {
     }
 
     public List<PracticeTicketView> getAllTicketsAssignedToMentor(long mentorId) {
-        return practiceTicketRepository.findAllById_MentorId(mentorId);
+        return practiceTicketRepository.findAllPracticeTicketById_MentorId(mentorId);
     }
 
     public List<PracticeResultView> getRatingOfStudents() {

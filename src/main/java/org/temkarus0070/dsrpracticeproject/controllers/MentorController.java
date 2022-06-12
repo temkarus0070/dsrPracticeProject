@@ -15,8 +15,8 @@ public class MentorController {
     private MentorService mentorService;
 
     @GetMapping
-    public MentorView get(@RequestParam long id) {
-        return mentorService.get(id);
+    public MentorView get(@RequestParam long mentorId) {
+        return mentorService.get(mentorId);
     }
 
     @GetMapping("/all")
@@ -30,7 +30,7 @@ public class MentorController {
     }
 
     @DeleteMapping
-    public void delete(@RequestParam long id) {
-        mentorService.delete(id);
+    public void delete(@RequestParam long mentorId) {
+        mentorService.delete(mentorId);
     }
 }

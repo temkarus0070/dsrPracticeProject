@@ -30,6 +30,6 @@ public interface PracticeTicketRepository extends JpaRepository<PracticeTicket, 
     List<ProgrammingLanguageStatsView> findStatsByProgrammingLanguages();
 
     @EntityGraph("practiceTickerGraph")
-    List<PracticeTicketView> findAllById_MentorId(long mentorId);
+    List<PracticeTicketView> findAllPracticeTicketById_MentorId(long mentorId);
 
 }

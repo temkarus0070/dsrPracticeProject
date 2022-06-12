@@ -33,8 +33,8 @@ public class PracticeTicketController {
     }
 
     @GetMapping("/assignedToMentor")
-    public List<PracticeTicketView> practiceTicketsOfMentor(long mentorId) {
-        return practiceTicketService.getAll();
+    public List<PracticeTicketView> practiceTicketsOfMentor(@RequestParam long mentorId) {
+        return practiceTicketService.getAllTicketsAssignedToMentor(mentorId);
     }
 
     @GetMapping("/practiceStats")

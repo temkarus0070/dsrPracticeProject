@@ -15,8 +15,8 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping
-    public StudentView getStudent(@RequestParam long id) {
-        return studentService.get(id);
+    public StudentView getStudent(@RequestParam long studentId) {
+        return studentService.get(studentId);
     }
 
     @GetMapping("/all")
@@ -35,8 +35,8 @@ public class StudentController {
     }
 
     @DeleteMapping
-    public void delete(@RequestParam long id) {
-        studentService.delete(id);
+    public void delete(@RequestParam long studentId) {
+        studentService.delete(studentId);
     }
 
 
