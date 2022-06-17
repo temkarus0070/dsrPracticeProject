@@ -30,6 +30,6 @@ public class Mentor extends Person {
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(super.hashCode());
     }
 }

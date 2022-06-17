@@ -19,9 +19,14 @@ public class MentorController {
         return mentorService.get(mentorId);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<MentorView> getList() {
         return mentorService.getAll();
+    }
+
+    @PostMapping
+    public void create(@RequestBody Mentor mentor){
+        mentorService.add(mentor);
     }
 
     @PatchMapping

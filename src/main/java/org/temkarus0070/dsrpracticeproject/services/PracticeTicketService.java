@@ -38,10 +38,12 @@ public class PracticeTicketService {
         return practiceTicketRepository.findAllByOrderByRecommendToHireDescFinalMarkDesc();
     }
 
-    public PracticeTicketStats getStatsByPractice() {
-        List<MentorStudentsStatsView> statsByMentors = practiceTicketRepository.findStatsByMentors();
-        List<ProgrammingLanguageStatsView> statsByProgrammingLanguages = practiceTicketRepository.findStatsByProgrammingLanguages();
-        return new PracticeTicketStats(statsByMentors, statsByProgrammingLanguages);
+    public   List<MentorStudentsStatsView> getStatsByMentors() {
+        return practiceTicketRepository.findStatsByMentors();
+    }
+
+    public   List<ProgrammingLanguageStatsView> getStatsByProgrammingLanguage(){
+        return practiceTicketRepository.findStatsByProgrammingLanguages();
     }
 
     public void update(PracticeTicket practiceTicket) {

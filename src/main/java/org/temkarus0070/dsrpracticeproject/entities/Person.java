@@ -34,6 +34,6 @@ public abstract class Person {
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, fullName);
     }
 }

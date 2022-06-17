@@ -1,10 +1,7 @@
 package org.temkarus0070.dsrpracticeproject.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.temkarus0070.dsrpracticeproject.PracticeTicketStats;
 import org.temkarus0070.dsrpracticeproject.entities.PracticeTicket;
 import org.temkarus0070.dsrpracticeproject.projections.PracticeResultView;
@@ -27,9 +24,14 @@ public class PracticeTicketController {
         return practiceTicketService.get(practiceTicketId);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<PracticeTicketView> list() {
         return practiceTicketService.getAll();
+    }
+
+    @PostMapping
+    public void create(@RequestBody PracticeTicket practiceTicket){
+        practiceTicketService.add(practiceTicket);
     }
 
     @GetMapping("/assignedToMentor")
@@ -37,14 +39,5 @@ public class PracticeTicketController {
         return practiceTicketService.getAllTicketsAssignedToMentor(mentorId);
     }
 
-    @GetMapping("/practiceStats")
-    public PracticeTicketStats getStats() {
-        return practiceTicketService.getStatsByPractice();
-    }
-
-    @GetMapping("/studentsRating")
-    public List<PracticeResultView> getRating() {
-        return practiceTicketService.getRatingOfStudents();
-    }
 
 }
