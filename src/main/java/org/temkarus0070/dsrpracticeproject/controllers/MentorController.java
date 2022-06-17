@@ -9,14 +9,14 @@ import org.temkarus0070.dsrpracticeproject.services.MentorService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/mentor")
+@RequestMapping("/mentors")
 public class MentorController {
     @Autowired
     private MentorService mentorService;
 
-    @GetMapping
-    public MentorView get(@RequestParam long mentorId) {
-        return mentorService.get(mentorId);
+    @GetMapping("/{id}")
+    public MentorView get(@PathVariable long id) {
+        return mentorService.get(id);
     }
 
     @GetMapping
@@ -34,8 +34,8 @@ public class MentorController {
         mentorService.update(mentor);
     }
 
-    @DeleteMapping
-    public void delete(@RequestParam long mentorId) {
-        mentorService.delete(mentorId);
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable long id) {
+        mentorService.delete(id);
     }
 }

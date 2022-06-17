@@ -13,22 +13,21 @@ import org.temkarus0070.dsrpracticeproject.services.PracticeTicketService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/practiceTicket/stats")
 public class PracticeTicketStatsController {
     @Autowired
     private PracticeTicketService practiceTicketService;
 
-    @GetMapping("/byMentors")
+    @GetMapping("/mentors/practice-tickets/stats")
     public List<MentorStudentsStatsView>  getStatsByMentors() {
         return practiceTicketService.getStatsByMentors();
     }
 
-    @GetMapping("/programmingLanguages")
+    @GetMapping("/students/practice-tickets/stats/programming-languages")
     public List<ProgrammingLanguageStatsView> getStatsByProgrammingLanguages(){
         return practiceTicketService.getStatsByProgrammingLanguage();
     }
 
-    @GetMapping("/studentsRating")
+    @GetMapping("/students/practice-tickets/stats/students-rating")
     public List<PracticeResultView> getRating() {
         return practiceTicketService.getRatingOfStudents();
     }

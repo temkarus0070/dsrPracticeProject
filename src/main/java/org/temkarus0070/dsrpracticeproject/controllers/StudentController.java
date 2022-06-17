@@ -9,17 +9,17 @@ import org.temkarus0070.dsrpracticeproject.services.StudentService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/students")
 public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @GetMapping
-    public StudentView getStudent(@RequestParam long studentId) {
-        return studentService.get(studentId);
+    @GetMapping("/{id}")
+    public StudentView getStudent(@PathVariable long id) {
+        return studentService.get(id);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<StudentView> getList() {
         return studentService.getAll();
     }
@@ -34,9 +34,9 @@ public class StudentController {
         studentService.edit(student);
     }
 
-    @DeleteMapping
-    public void delete(@RequestParam long studentId) {
-        studentService.delete(studentId);
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable long id) {
+        studentService.delete(id);
     }
 
 

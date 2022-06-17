@@ -12,31 +12,30 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/practiceTicket")
 public class PracticeTicketController {
     @Autowired
     private PracticeTicketService practiceTicketService;
 
-    @GetMapping
+    @GetMapping("/practice-tickets")
     public PracticeTicketView get(@RequestParam long mentorId, @RequestParam long studentId, @RequestParam String programmingLanguage, @RequestParam LocalDate beginOfPractice,
                                   @RequestParam LocalDate endOfPractice) {
         PracticeTicket.PracticeTicketId practiceTicketId = new PracticeTicket.PracticeTicketId(mentorId, studentId, programmingLanguage, beginOfPractice, endOfPractice);
         return practiceTicketService.get(practiceTicketId);
     }
 
-    @GetMapping
+    @GetMapping("/practice-tickets")
     public List<PracticeTicketView> list() {
         return practiceTicketService.getAll();
     }
 
-    @PostMapping
+    @PostMapping("/practice-tickets")
     public void create(@RequestBody PracticeTicket practiceTicket){
         practiceTicketService.add(practiceTicket);
     }
 
-    @GetMapping("/assignedToMentor")
-    public List<PracticeTicketView> practiceTicketsOfMentor(@RequestParam long mentorId) {
-        return practiceTicketService.getAllTicketsAssignedToMentor(mentorId);
+    @GetMapping("/mentors/{id}/practice-tickets")
+    public List<PracticeTicketView> practiceTicketsOfMentor(@PathVariable long id) {
+        return practiceTicketService.getAllTicketsAssignedToMentor(id);
     }
 
 
