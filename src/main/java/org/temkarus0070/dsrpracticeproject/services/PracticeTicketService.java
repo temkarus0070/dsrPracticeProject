@@ -11,6 +11,7 @@ import org.temkarus0070.dsrpracticeproject.projections.ProgrammingLanguageStatsV
 import org.temkarus0070.dsrpracticeproject.repositories.PracticeTicketRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -34,16 +35,16 @@ public class PracticeTicketService {
         return practiceTicketRepository.findAllPracticeTicketById_MentorId(mentorId);
     }
 
-    public List<PracticeResultView> getRatingOfStudents() {
-        return practiceTicketRepository.findAllByOrderByRecommendToHireDescFinalMarkDesc();
+    public List<PracticeResultView> getRatingOfStudents(LocalDate practiceBegin,LocalDate practiceEnd) {
+        return practiceTicketRepository.findAllById_BeginOfPracticeIsAndId_EndOfPracticeIsLessThanEqualOrderByRecommendToHireDescFinalMarkDesc(practiceBegin,practiceEnd);
     }
 
-    public   List<MentorStudentsStatsView> getStatsByMentors() {
-        return practiceTicketRepository.findStatsByMentors();
+    public   List<MentorStudentsStatsView> getStatsByMentors(LocalDate practiceBegin,LocalDate practiceEnd) {
+        return practiceTicketRepository.findStatsByMentors(practiceBegin,practiceEnd);
     }
 
-    public   List<ProgrammingLanguageStatsView> getStatsByProgrammingLanguage(){
-        return practiceTicketRepository.findStatsByProgrammingLanguages();
+    public   List<ProgrammingLanguageStatsView> getStatsByProgrammingLanguage(LocalDate practiceBegin,LocalDate practiceEnd){
+        return practiceTicketRepository.findStatsByProgrammingLanguages(practiceBegin,practiceEnd);
     }
 
     public void update(PracticeTicket practiceTicket) {

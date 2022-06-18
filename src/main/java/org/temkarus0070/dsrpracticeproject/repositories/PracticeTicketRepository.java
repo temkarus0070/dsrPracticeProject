@@ -10,6 +10,7 @@ import org.temkarus0070.dsrpracticeproject.projections.PracticeResultView;
 import org.temkarus0070.dsrpracticeproject.projections.PracticeTicketView;
 import org.temkarus0070.dsrpracticeproject.projections.ProgrammingLanguageStatsView;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -20,14 +21,14 @@ public interface PracticeTicketRepository extends JpaRepository<PracticeTicket, 
     @EntityGraph("practiceTickerGraph")
     List<PracticeTicketView> findAllPracticeTicketBy();
 
-    List<PracticeResultView> findAllByOrderByRecommendToHireDescFinalMarkDesc();
+    List<PracticeResultView> findAllById_BeginOfPracticeIsAndId_EndOfPracticeIsLessThanEqualOrderByRecommendToHireDescFinalMarkDesc(LocalDate beginPractice,LocalDate endPractice);
 
     @Query(value = "SELECT t.mentor.id as mentorId,t.mentor.fullName as fullName,count(t.id.studentId) as studentsCount,SUM(CASE when t.recommendToHire is true then  1 else 0 end)as successStudentsCount" +
-            "  from PracticeTicket t  group by t.mentor.id,t.mentor.fullName")
-    List<MentorStudentsStatsView> findStatsByMentors();
+            "  from PracticeTicket t WHERE t.id.beginOfPractice >= :beginPractice and t.id.endOfPractice<= :endPractice group by t.mentor.id,t.mentor.fullName")
+    List<MentorStudentsStatsView> findStatsByMentors(LocalDate beginPractice,LocalDate endPractice);
 
-    @Query(value = "SELECT pt.id.programmingLanguage as language,count(pt.student) as count from PracticeTicket pt group by pt.id.programmingLanguage")
-    List<ProgrammingLanguageStatsView> findStatsByProgrammingLanguages();
+    @Query(value = "SELECT pt.id.programmingLanguage as language,count(pt.student) as count from PracticeTicket pt WHERE pt.id.beginOfPractice >= :beginPractice and pt.id.endOfPractice<= :endPractice group by pt.id.programmingLanguage")
+    List<ProgrammingLanguageStatsView> findStatsByProgrammingLanguages(LocalDate beginPractice,LocalDate endPractice);
 
     @EntityGraph("practiceTickerGraph")
     List<PracticeTicketView> findAllPracticeTicketById_MentorId(long mentorId);

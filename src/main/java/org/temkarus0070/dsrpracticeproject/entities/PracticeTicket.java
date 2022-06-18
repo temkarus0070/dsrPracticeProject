@@ -60,6 +60,7 @@ public class PracticeTicket {
     @NoArgsConstructor
     @Getter
     @Setter
+    @Embeddable
     public static class PracticeTicketId implements Serializable {
         private long mentorId;
         private long studentId;

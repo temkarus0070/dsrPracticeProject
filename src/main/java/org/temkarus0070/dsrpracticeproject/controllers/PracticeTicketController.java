@@ -16,7 +16,7 @@ public class PracticeTicketController {
     @Autowired
     private PracticeTicketService practiceTicketService;
 
-    @GetMapping("/practice-tickets")
+    @GetMapping("/practice-tickets/practice-ticket")
     public PracticeTicketView get(@RequestParam long mentorId, @RequestParam long studentId, @RequestParam String programmingLanguage, @RequestParam LocalDate beginOfPractice,
                                   @RequestParam LocalDate endOfPractice) {
         PracticeTicket.PracticeTicketId practiceTicketId = new PracticeTicket.PracticeTicketId(mentorId, studentId, programmingLanguage, beginOfPractice, endOfPractice);
@@ -36,6 +36,17 @@ public class PracticeTicketController {
     @GetMapping("/mentors/{id}/practice-tickets")
     public List<PracticeTicketView> practiceTicketsOfMentor(@PathVariable long id) {
         return practiceTicketService.getAllTicketsAssignedToMentor(id);
+    }
+
+    @PatchMapping("/practice-tickets")
+    public void update(@RequestBody PracticeTicket practiceTicket){
+        practiceTicketService.update(practiceTicket);
+    }
+
+    @DeleteMapping("/practice-tickets")
+    public void delete(@RequestParam long mentorId, @RequestParam long studentId, @RequestParam String programmingLanguage, @RequestParam LocalDate beginOfPractice,
+                       @RequestParam LocalDate endOfPractice){
+practiceTicketService.delete(new PracticeTicket.PracticeTicketId(mentorId,studentId,programmingLanguage,beginOfPractice,endOfPractice));
     }
 
 
