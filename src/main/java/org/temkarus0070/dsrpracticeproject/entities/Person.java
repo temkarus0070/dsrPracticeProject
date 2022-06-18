@@ -16,7 +16,7 @@ import java.util.Objects;
 @Setter
 public abstract class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @NotNull
