@@ -27,6 +27,7 @@ public class StudentService {
         student1.setStudyCourse(student.getStudyCourse());
         student1.setStudyGroup(student.getStudyGroup());
         student1.setTestResult(student.getTestResult());
+        studentRepository.save(student1);
     }
 
     public void delete(long id) {
