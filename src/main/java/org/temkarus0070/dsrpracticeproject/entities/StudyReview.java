@@ -32,6 +32,6 @@ public class StudyReview {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, textReview);
+        return Objects.hash(id);
     }
 }

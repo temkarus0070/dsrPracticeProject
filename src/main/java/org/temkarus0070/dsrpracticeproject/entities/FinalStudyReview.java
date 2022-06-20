@@ -25,6 +25,6 @@ public class FinalStudyReview extends StudyReview {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), practiceTicket);
+        return Objects.hash(getId());
     }
 }
