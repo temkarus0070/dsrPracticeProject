@@ -8,7 +8,6 @@ import org.temkarus0070.dsrpracticeproject.entities.PracticeTicket;
 import org.temkarus0070.dsrpracticeproject.projections.MentorStudentsStatsView;
 import org.temkarus0070.dsrpracticeproject.projections.PracticeResultView;
 import org.temkarus0070.dsrpracticeproject.projections.PracticeTicketView;
-import org.temkarus0070.dsrpracticeproject.projections.ProgrammingLanguageStatsView;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,8 +26,6 @@ public interface PracticeTicketRepository extends JpaRepository<PracticeTicket, 
             "  from PracticeTicket t WHERE t.id.beginOfPractice >= :beginPractice and t.id.endOfPractice<= :endPractice group by t.mentor.id,t.mentor.fullName")
     List<MentorStudentsStatsView> findStatsByMentors(LocalDate beginPractice,LocalDate endPractice);
 
-    @Query(value = "SELECT pt.id.programmingLanguage as language,count(pt.student) as count from PracticeTicket pt WHERE pt.id.beginOfPractice >= :beginPractice and pt.id.endOfPractice<= :endPractice group by pt.id.programmingLanguage")
-    List<ProgrammingLanguageStatsView> findStatsByProgrammingLanguages(LocalDate beginPractice,LocalDate endPractice);
 
     @EntityGraph("practiceTickerGraph")
     List<PracticeTicketView> findAllPracticeTicketById_MentorId(long mentorId);

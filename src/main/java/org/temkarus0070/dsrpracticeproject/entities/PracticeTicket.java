@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -18,6 +17,9 @@ import java.util.Set;
 @Setter
 @NamedEntityGraph(name = "practiceTickerGraph", includeAllAttributes = true)
 public class PracticeTicket {
+    @ManyToOne
+    @MapsId("programmingLanguageName")
+    private ProgrammingLanguage programmingLanguage;
     @EmbeddedId
     private PracticeTicketId id;
 
@@ -29,8 +31,8 @@ public class PracticeTicket {
     @MapsId(value = "studentId")
     private Student student;
 
-    @NotNull
-    private String taskName;
+    @OneToOne
+    private PracticeTask practiceTask;
 
     @OneToMany(mappedBy = "practiceTicket")
     private Set<WeeklyStudyReview> weeklyMentorReviews;
@@ -64,7 +66,7 @@ public class PracticeTicket {
     public static class PracticeTicketId implements Serializable {
         private long mentorId;
         private long studentId;
-        private String programmingLanguage;
+        private String programmingLanguageName;
         private LocalDate beginOfPractice;
         private LocalDate endOfPractice;
 
@@ -73,12 +75,12 @@ public class PracticeTicket {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             PracticeTicketId that = (PracticeTicketId) o;
-            return mentorId == that.mentorId && studentId == that.studentId && programmingLanguage.equals(that.programmingLanguage) && beginOfPractice.equals(that.beginOfPractice) && endOfPractice.equals(that.endOfPractice);
+            return mentorId == that.mentorId && studentId == that.studentId && programmingLanguageName.equals(that.programmingLanguageName) && beginOfPractice.equals(that.beginOfPractice) && endOfPractice.equals(that.endOfPractice);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(mentorId, studentId, programmingLanguage, beginOfPractice, endOfPractice);
+            return Objects.hash(mentorId, studentId, programmingLanguageName, beginOfPractice, endOfPractice);
         }
     }
 }

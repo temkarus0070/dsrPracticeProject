@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: rename-column-final-study-review-table-after-adding-table-for-programming-language
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            columnExists:
+              tableName: final_study_review
+              columnName: practice_ticket_programming_language_name
+              schemaName: public
+      changes:
+        - renameColumn:
+            oldColumnName: practice_ticket_programming_language
+            newColumnName: practice_ticket_programming_language_id
+            tableName: final_study_review
+            schemaName: public
+  - changeSet:
+      id: rename-column-weekly-study-review-table-after-adding-table-for-programming-language
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            columnExists:
+              tableName: weekly_study_review
+              columnName: practice_ticket_programming_language_name
+              schemaName: public
+      changes:
+        - renameColumn:
+            oldColumnName: practice_ticket_programming_language
+            newColumnName: practice_ticket_programming_language_id
+            tableName: weekly_study_review
+            schemaName: public
+
+  - changeSet:
+      id: insert-prog-languages-at-special-table
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+          sqlCheck:
+            expectedResult: 0
+            sql: select count(*) from public.programming_language
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: select distinct(pt.programming_language) from practice_ticket pt
+              - column:
+                  name: id
+                  valueSequenceNext: hibernate_sequence
+            tableName: programming_language
+            schemaName: public
+
+      rollback:
+        - sql:
+            sql: delete from public.programming_language;
+
