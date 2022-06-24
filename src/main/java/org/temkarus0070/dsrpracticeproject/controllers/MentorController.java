@@ -25,13 +25,13 @@ public class MentorController {
     }
 
     @PostMapping
-    public void create(@RequestBody Mentor mentor){
+    public void create(@RequestBody Mentor mentor) {
         mentorService.add(mentor);
     }
 
-    @PatchMapping
-    public void update(@RequestBody Mentor mentor) {
-        mentorService.update(mentor);
+    @PutMapping("/{id}")
+    public void update(@PathVariable long id, @RequestBody Mentor mentor) {
+        mentorService.update(mentor, id);
     }
 
     @DeleteMapping("/{id}")

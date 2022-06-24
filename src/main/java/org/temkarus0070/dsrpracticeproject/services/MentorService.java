@@ -27,8 +27,8 @@ public class MentorService {
         return mentorRepository.findAllBy();
     }
 
-    public void update(Mentor mentor) {
-        Optional<Mentor> mentorOptional = mentorRepository.findById(mentor.getId());
+    public void update(Mentor mentor, long id) {
+        Optional<Mentor> mentorOptional = mentorRepository.findById(id);
         Mentor mentor1 = mentorOptional.orElseThrow(EntityNotFoundException::new);
         mentor1.setJobName(mentor.getJobName());
         mentor1.setContactData(mentor.getContactData());

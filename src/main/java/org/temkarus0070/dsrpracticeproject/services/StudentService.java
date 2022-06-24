@@ -19,8 +19,8 @@ public class StudentService {
         studentRepository.save(student);
     }
 
-    public void edit(Student student) {
-        Optional<Student> optionalStudent = studentRepository.findById(student.getId());
+    public void edit(Student student, long id) {
+        Optional<Student> optionalStudent = studentRepository.findById(id);
         Student student1 = optionalStudent.orElseThrow(EntityNotFoundException::new);
         student1.setContactData(student.getContactData());
         student1.setFullName(student.getFullName());

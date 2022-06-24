@@ -29,9 +29,9 @@ public class StudentController {
         studentService.add(student);
     }
 
-    @PatchMapping
-    public void update(@RequestBody Student student) {
-        studentService.edit(student);
+    @PutMapping("/{id}")
+    public void update(@PathVariable long id, @RequestBody Student student) {
+        studentService.edit(student, id);
     }
 
     @DeleteMapping("/{id}")
