@@ -18,7 +18,7 @@ import java.util.Set;
 @NamedEntityGraph(name = "practiceTickerGraph", includeAllAttributes = true)
 public class PracticeTicket {
     @ManyToOne
-    @MapsId("programmingLanguageName")
+    @MapsId("programmingLanguageId")
     private ProgrammingLanguage programmingLanguage;
     @EmbeddedId
     private PracticeTicketId id;
@@ -66,7 +66,7 @@ public class PracticeTicket {
     public static class PracticeTicketId implements Serializable {
         private long mentorId;
         private long studentId;
-        private String programmingLanguageName;
+        private long programmingLanguageId;
         private LocalDate beginOfPractice;
         private LocalDate endOfPractice;
 
@@ -75,12 +75,12 @@ public class PracticeTicket {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             PracticeTicketId that = (PracticeTicketId) o;
-            return mentorId == that.mentorId && studentId == that.studentId && programmingLanguageName.equals(that.programmingLanguageName) && beginOfPractice.equals(that.beginOfPractice) && endOfPractice.equals(that.endOfPractice);
+            return mentorId == that.mentorId && studentId == that.studentId && programmingLanguageId == that.programmingLanguageId && beginOfPractice.equals(that.beginOfPractice) && endOfPractice.equals(that.endOfPractice);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(mentorId, studentId, programmingLanguageName, beginOfPractice, endOfPractice);
+            return Objects.hash(mentorId, studentId, programmingLanguageId, beginOfPractice, endOfPractice);
         }
     }
 }

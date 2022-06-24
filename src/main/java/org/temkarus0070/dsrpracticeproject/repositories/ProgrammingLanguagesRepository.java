@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.temkarus0070.dsrpracticeproject.entities.ProgrammingLanguage;
 import org.temkarus0070.dsrpracticeproject.projections.ProgrammingLanguageStatsView;
+import org.temkarus0070.dsrpracticeproject.projections.ProgrammingLanguagesView;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,4 +15,8 @@ public interface ProgrammingLanguagesRepository extends JpaRepository<Programmin
 
     @Query(value = "SELECT pl.name as language,count(pt) as count from ProgrammingLanguage pl  left join  pl.practiceTickets pt on pt.id.beginOfPractice >= :beginPractice and pt.id.endOfPractice<= :endPractice group by pl.name")
     List<ProgrammingLanguageStatsView> findStatsByProgrammingLanguages(LocalDate beginPractice, LocalDate endPractice);
+
+    List<ProgrammingLanguagesView> findAllBy();
+
+    ProgrammingLanguagesView findProgrammingLanguagesByNameLikeIgnoreCase(String name);
 }

@@ -2,9 +2,7 @@ package org.temkarus0070.dsrpracticeproject.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.temkarus0070.dsrpracticeproject.PracticeTicketStats;
 import org.temkarus0070.dsrpracticeproject.entities.PracticeTicket;
-import org.temkarus0070.dsrpracticeproject.projections.PracticeResultView;
 import org.temkarus0070.dsrpracticeproject.projections.PracticeTicketView;
 import org.temkarus0070.dsrpracticeproject.services.PracticeTicketService;
 
@@ -17,9 +15,9 @@ public class PracticeTicketController {
     private PracticeTicketService practiceTicketService;
 
     @GetMapping("/practice-tickets/practice-ticket")
-    public PracticeTicketView get(@RequestParam long mentorId, @RequestParam long studentId, @RequestParam String programmingLanguage, @RequestParam LocalDate beginOfPractice,
+    public PracticeTicketView get(@RequestParam long mentorId, @RequestParam long studentId, @RequestParam long programmingLanguageId, @RequestParam LocalDate beginOfPractice,
                                   @RequestParam LocalDate endOfPractice) {
-        PracticeTicket.PracticeTicketId practiceTicketId = new PracticeTicket.PracticeTicketId(mentorId, studentId, programmingLanguage, beginOfPractice, endOfPractice);
+        PracticeTicket.PracticeTicketId practiceTicketId = new PracticeTicket.PracticeTicketId(mentorId, studentId, programmingLanguageId, beginOfPractice, endOfPractice);
         return practiceTicketService.get(practiceTicketId);
     }
 
@@ -44,9 +42,9 @@ public class PracticeTicketController {
     }
 
     @DeleteMapping("/practice-tickets")
-    public void delete(@RequestParam long mentorId, @RequestParam long studentId, @RequestParam String programmingLanguage, @RequestParam LocalDate beginOfPractice,
-                       @RequestParam LocalDate endOfPractice){
-practiceTicketService.delete(new PracticeTicket.PracticeTicketId(mentorId,studentId,programmingLanguage,beginOfPractice,endOfPractice));
+    public void delete(@RequestParam long mentorId, @RequestParam long studentId, @RequestParam long programmingLanguageId, @RequestParam LocalDate beginOfPractice,
+                       @RequestParam LocalDate endOfPractice) {
+        practiceTicketService.delete(new PracticeTicket.PracticeTicketId(mentorId, studentId, programmingLanguageId, beginOfPractice, endOfPractice));
     }
 
 

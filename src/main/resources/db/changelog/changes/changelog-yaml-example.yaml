@@ -33,7 +33,7 @@ databaseChangeLog:
             schemaName: public
 
   - changeSet:
-      id: insert-prog-languages-at-special-table
+      id: insert-prog-languages-at-special-table-from-tickets
       author: temkarus0070
       preConditions:
         - onFail: MARK_RAN
@@ -41,18 +41,127 @@ databaseChangeLog:
             expectedResult: 0
             sql: select count(*) from public.programming_language
       changes:
-        - insert:
-            columns:
-              - column:
-                  name: name
-                  value: select distinct(pt.programming_language) from practice_ticket pt
-              - column:
-                  name: id
-                  valueSequenceNext: hibernate_sequence
+        - sql:
+            sql: insert into programming_language(name,id)
+              select pt.programming_language,nextval('hibernate_sequence') from practice_ticket pt group by pt.programming_language
+      rollback:
+        - delete:
             tableName: programming_language
             schemaName: public
-
-      rollback:
+            where: name is not null
+  - changeSet:
+      id: add-ids-to-prog-languages-of-tickets
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+          -not:
+            columnExists:
+              columnName: programming_language_id
+              tableName: practice_ticket
+      changes:
+        - dropAllForeignKeyConstraints:
+            baseTableName: final_study_review
+        - dropAllForeignKeyConstraints:
+            baseTableName: weekly_study_review
         - sql:
-            sql: delete from public.programming_language;
-
+            sql: "update final_study_review set  practice_ticket_programming_language_name=prog.id from programming_language prog where prog.name= practice_ticket_programming_language_name "
+        - sql:
+            sql: "update weekly_study_review set  practice_ticket_programming_language_id=prog.id from programming_language prog where prog.name= practice_ticket_programming_language_id"
+        - sql:
+            sql: "update practice_ticket set programming_language=prog.id from programming_language prog where prog.name=programming_language "
+  - changeSet:
+      id: drop-bad-id-in-prog-lang
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+          -not:
+            columnExists:
+              columnName: programming_language_id
+              tableName: practice_ticket
+      changes:
+        - dropPrimaryKey:
+            tableName: programming_language
+            schemaName: public
+        - addPrimaryKey:
+            tableName: programming_language
+            schemaName: public
+            columnNames: id
+  - changeSet:
+      id: change-foreign-keys-names-and-types-from-reviews-and-change-prog-lang-name-datatype-and-rename-prog-lang-name-to-id
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+          -not:
+            columnExists:
+              columnName: programming_language_id
+              tableName: practice_ticket
+      changes:
+        - dropAllForeignKeyConstraints:
+            baseTableName: final_study_review
+        - dropAllForeignKeyConstraints:
+            baseTableName: weekly_study_review
+        - dropAllForeignKeyConstraints:
+            baseTableName: practice_ticket
+        - modifyDataType:
+            tableName: practice_ticket
+            columnName: programming_language
+            newDataType: bigint
+            schemaName: public
+        - modifyDataType:
+            tableName: weekly_study_review
+            columnName: practice_ticket_programming_language_id
+            newDataType: bigint
+            schemaName: public
+        - renameColumn:
+            oldColumnName: practice_ticket_programming_language_name
+            newColumnName: practice_ticket_programming_language_id
+            tableName: final_study_review
+            schemaName: public
+        - modifyDataType:
+            tableName: final_study_review
+            columnName: practice_ticket_programming_language_id
+            newDataType: bigint
+            schemaName: public
+        - renameColumn:
+            oldColumnName: programming_language
+            newColumnName: programming_language_id
+            tableName: practice_ticket
+            schemaName: public
+  - changeSet:
+      id: do-prog-lang-name-unique
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            sql: SELECT COUNT(constraint_name) FROM information_schema.table_constraints  WHERE table_name='programming_language' AND constraint_type='UNIQUE';
+            expectedResult: 0
+      changes:
+        - addUniqueConstraint:
+            columnNames: name
+            tableName: programming_language
+  - changeSet:
+      id: add-number-key-to-practice-task
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - sqlCheck:
+                expectedResult: 0
+                sql: SELECT count(c.column_name)  FROM information_schema.table_constraints tc JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_name) JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name  WHERE constraint_type = 'PRIMARY KEY' and tc.table_name = 'practice_task' and c.column_name not like '%id'
+      changes:
+        - dropAllForeignKeyConstraints:
+            baseTableName: practice_ticket
+        - dropColumn:
+            tableName: practice_ticket
+            columns:
+              - column:
+                  name: practice_task_task_name
+              - column:
+                  name: practice_task_task_text
+        - dropPrimaryKey:
+            tableName: practice_task
+            schemaName: public
+        - addPrimaryKey:
+            tableName: practice_task
+            schemaName: public
+            columnNames: id
