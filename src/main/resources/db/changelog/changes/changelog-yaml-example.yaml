@@ -49,6 +49,25 @@ databaseChangeLog:
             tableName: programming_language
             schemaName: public
             where: name is not null
+
+  - changeSet:
+      id: rename-columns-of-prog-langs-FK-in-reviews-if-needed
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+          columnExists:
+            columnName: practice_ticket_programming_language_name
+            tableName: final_study_review
+      changes:
+        - dropAllForeignKeyConstraints:
+            baseTableName: final_study_review
+        - renameColumn:
+            oldColumnName: practice_ticket_programming_language_name
+            newColumnName: practice_ticket_programming_language_id
+            tableName: final_study_review
+            schemaName: public
+
+
   - changeSet:
       id: add-ids-to-prog-languages-of-tickets
       author: temkarus0070
@@ -64,7 +83,7 @@ databaseChangeLog:
         - dropAllForeignKeyConstraints:
             baseTableName: weekly_study_review
         - sql:
-            sql: "update final_study_review set  practice_ticket_programming_language_name=prog.id from programming_language prog where prog.name= practice_ticket_programming_language_name "
+            sql: "update final_study_review set  practice_ticket_programming_language_id=prog.id from programming_language prog where prog.name= practice_ticket_programming_language_id "
         - sql:
             sql: "update weekly_study_review set  practice_ticket_programming_language_id=prog.id from programming_language prog where prog.name= practice_ticket_programming_language_id"
         - sql:
@@ -86,6 +105,8 @@ databaseChangeLog:
             tableName: programming_language
             schemaName: public
             columnNames: id
+
+
   - changeSet:
       id: change-foreign-keys-names-and-types-from-reviews-and-change-prog-lang-name-datatype-and-rename-prog-lang-name-to-id
       author: temkarus0070
@@ -111,11 +132,6 @@ databaseChangeLog:
             tableName: weekly_study_review
             columnName: practice_ticket_programming_language_id
             newDataType: bigint
-            schemaName: public
-        - renameColumn:
-            oldColumnName: practice_ticket_programming_language_name
-            newColumnName: practice_ticket_programming_language_id
-            tableName: final_study_review
             schemaName: public
         - modifyDataType:
             tableName: final_study_review
