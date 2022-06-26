@@ -23,6 +23,8 @@ public interface PracticeTicketView {
 
     StudyReviewProjection getFinalMentorReview();
 
+    ProgrammingLanguagesView getProgrammingLanguage();
+
     interface StudyReviewProjection {
         long getId();
 

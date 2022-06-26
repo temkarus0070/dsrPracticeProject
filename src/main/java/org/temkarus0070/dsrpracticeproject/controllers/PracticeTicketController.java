@@ -23,7 +23,8 @@ public class PracticeTicketController {
 
     @GetMapping("/practice-tickets")
     public List<PracticeTicketView> list() {
-        return practiceTicketService.getAll();
+        List<PracticeTicketView> all = practiceTicketService.getAll();
+        return all;
     }
 
     @PostMapping("/practice-tickets")

@@ -181,3 +181,27 @@ databaseChangeLog:
             tableName: practice_task
             schemaName: public
             columnNames: id
+  - changeSet:
+      id: drop-taskname-column-in-practiceTicket
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+        - columnExists:
+            columnName: task_name
+            tableName: practice_ticket
+      changes:
+        - dropColumn:
+            columnName: task_name
+            tableName: practice_ticket
+  - changeSet:
+      id: insert-practice-task-to-their-table
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            sql: select count(*) from practice_task
+            expectedResult: 0
+      changes:
+        - sqlFile:
+            relativeToChangelogFile: true
+            path: practice_tasks.sql

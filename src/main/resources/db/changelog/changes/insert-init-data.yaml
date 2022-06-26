@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-init-data
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            sql: select count(*) from  student
+            expectedResult: 0
+      changes:
+        - sqlFile:
+            relativeToChangelogFile: true
+            path: init-data.sql
