@@ -13,7 +13,7 @@ public interface PracticeTicketView {
     StudentView getStudent();
 
 
-    String getTaskName();
+    TaskProjection getPracticeTask();
 
     boolean isRecommendToHire();
 
@@ -27,5 +27,11 @@ public interface PracticeTicketView {
         long getId();
 
         String getTextReview();
+    }
+
+    public interface TaskProjection {
+        public String getTaskName();
+
+        public String getTaskText();
     }
 }

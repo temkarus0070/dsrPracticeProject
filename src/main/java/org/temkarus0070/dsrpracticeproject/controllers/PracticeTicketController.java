@@ -27,7 +27,7 @@ public class PracticeTicketController {
     }
 
     @PostMapping("/practice-tickets")
-    public void create(@RequestBody PracticeTicket practiceTicket){
+    public void create(@RequestBody PracticeTicket practiceTicket) {
         practiceTicketService.add(practiceTicket);
     }
 
@@ -36,8 +36,13 @@ public class PracticeTicketController {
         return practiceTicketService.getAllTicketsAssignedToMentor(id);
     }
 
+    @GetMapping("/students/{id}/practice-tickets")
+    public List<PracticeTicketView> practiceTicketsOfStudent(@PathVariable long id) {
+        return practiceTicketService.getAllTicketsAssignedToStudent(id);
+    }
+
     @PatchMapping("/practice-tickets")
-    public void update(@RequestBody PracticeTicket practiceTicket){
+    public void update(@RequestBody PracticeTicket practiceTicket) {
         practiceTicketService.update(practiceTicket);
     }
 

@@ -31,14 +31,15 @@ public class PracticeTicket {
     @MapsId(value = "studentId")
     private Student student;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private PracticeTask practiceTask;
 
-    @OneToMany(mappedBy = "practiceTicket")
+    @OneToMany(mappedBy = "practiceTicket", cascade = CascadeType.REMOVE)
     private Set<WeeklyStudyReview> weeklyMentorReviews;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private FinalStudyReview finalMentorReview;
+
     private boolean recommendToHire;
 
     @Enumerated(value = EnumType.ORDINAL)

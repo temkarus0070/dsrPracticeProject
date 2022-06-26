@@ -30,7 +30,9 @@ public class PracticeTicketService {
         return practiceTicketRepository.findAllPracticeTicketById_MentorId(mentorId);
     }
 
-
+public List<PracticeTicketView> getAllTicketsAssignedToStudent(long id) {
+    return practiceTicketRepository.findAllById_StudentId(id);
+}
 
     public void update(PracticeTicket practiceTicket) {
         PracticeTicket practiceTicket1 = practiceTicketRepository.findById(practiceTicket.getId()).orElseThrow(EntityNotFoundException::new);
