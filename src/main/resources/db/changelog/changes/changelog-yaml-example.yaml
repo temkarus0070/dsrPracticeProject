@@ -204,4 +204,4 @@ databaseChangeLog:
       changes:
         - sqlFile:
             relativeToChangelogFile: true
-            path: practice_tasks.sql
+            path: ../practice_tasks.sql

@@ -13,7 +13,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-@RestController("/programming-languages")
+@RestController()
+@RequestMapping("/programming-languages")
 public class ProgrammingLanguagesController {
     @Autowired
     private ProgrammingLanguagesService programmingLanguagesService;

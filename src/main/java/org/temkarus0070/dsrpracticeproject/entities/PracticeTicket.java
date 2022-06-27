@@ -31,7 +31,7 @@ public class PracticeTicket {
     @MapsId(value = "studentId")
     private Student student;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private PracticeTask practiceTask;
 
     @OneToMany(mappedBy = "practiceTicket", cascade = CascadeType.REMOVE)

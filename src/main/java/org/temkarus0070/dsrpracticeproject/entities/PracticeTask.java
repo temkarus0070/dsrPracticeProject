@@ -9,11 +9,15 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"task_name", "task_text"})})
 public class PracticeTask {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+
+    @Column(name = "task_name")
     private String taskName;
+    @Column(name = "task_text")
     private String taskText;
     @OneToOne(mappedBy = "practiceTask")
     private PracticeTicket practiceTicket;

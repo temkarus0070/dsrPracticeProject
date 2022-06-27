@@ -10,4 +10,4 @@ databaseChangeLog:
       changes:
         - sqlFile:
             relativeToChangelogFile: true
-            path: init-data.sql
+            path: ../init-data.sql
