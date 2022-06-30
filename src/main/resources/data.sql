@@ -41,13 +41,13 @@ INSERT INTO public.practice_ticket (begin_of_practice, end_of_practice, programm
                                     recommend_to_hire, student_id, mentor_id, final_mentor_review_id)
 VALUES ('2022-06-01', '2022-07-01', 32, null, false, 1, 1, null)on conflict do nothing;
 INSERT INTO public.practice_ticket (begin_of_practice, end_of_practice, programming_language_id, final_mark,
-                                    recommend_to_hire, student_id, mentor_id, final_mentor_review_id, practice_task_id)
+                                    recommend_to_hire, student_id, mentor_id, final_mentor_review_id)
 VALUES ('2022-05-22', '2022-06-11', 31, null, false, 2, 2, null)on conflict do nothing;
 INSERT INTO public.practice_ticket (begin_of_practice, end_of_practice, programming_language_id, final_mark,
-                                    recommend_to_hire, student_id, mentor_id, final_mentor_review_id, practice_task_id)
+                                    recommend_to_hire, student_id, mentor_id, final_mentor_review_id)
 VALUES ('2022-05-22', '2022-06-11', 30, 3, false, 3, 2, null)on conflict do nothing;
 INSERT INTO public.practice_ticket (begin_of_practice, end_of_practice, programming_language_id, final_mark,
-                                    recommend_to_hire, student_id, mentor_id, final_mentor_review_id, practice_task_id)
+                                    recommend_to_hire, student_id, mentor_id, final_mentor_review_id)
 VALUES ('2022-05-22', '2022-06-11', 30, 2, true, 2, 2, null)on conflict do nothing;
 
 
@@ -130,21 +130,25 @@ where begin_of_practice = date '2022-05-22'
  3 is max student id in init-data.sql rows
  */
 
-with id1 as (
-    insert into practice_task(task_name, task_text,id) values ('calculator','операции:плюс, минус, умножить',nextval('hibernate_sequence')) on conflict do nothing returning id)
-update practice_ticket
-set practice_task_id = (select id from id1)
-where exists(select * from programming_language pl where programming_language_id = pl.id and name like '%Java');
-
-with id2 as (insert into practice_task(task_name, task_text,id) values ('framework','что то вроде реакта',nextval('hibernate_sequence')) on conflict do nothing returning id)
-update practice_ticket
-set practice_task_id=(select id from id2)
-where exists(select * from programming_language pl where programming_language_id = pl.id and name like '%JS');
-
-WITH id3 as (insert into practice_task(task_name, task_text,id) values ('landing page','интернет магазин с товарами, технологии; css(flexbox, grid, нельзя использовать float),html',nextval('hibernate_sequence')) on conflict do nothing returning id)
-update practice_ticket
-set practice_task_id=(select id from id3)
-where exists(select * from programming_language pl where programming_language_id = pl.id and name like '%html');
+INSERT INTO public.practice_task (id, task_name, task_text, practice_ticket_begin_of_practice,
+                                  practice_ticket_end_of_practice, practice_ticket_mentor_id,
+                                  practice_ticket_programming_language_id, practice_ticket_student_id)
+VALUES (34, 'calculator', 'операции:плюс, минус, умножить', '2022-06-01', '2022-07-01', 1, 32,
+        1) on conflict do nothing;
+INSERT INTO public.practice_task (id, task_name, task_text, practice_ticket_begin_of_practice,
+                                  practice_ticket_end_of_practice, practice_ticket_mentor_id,
+                                  practice_ticket_programming_language_id, practice_ticket_student_id)
+VALUES (37, 'landing page', 'кофейня', '2022-05-22', '2022-06-11', 2, 30, 3) on conflict do nothing;
+INSERT INTO public.practice_task (id, task_name, task_text, practice_ticket_begin_of_practice,
+                                  practice_ticket_end_of_practice, practice_ticket_mentor_id,
+                                  practice_ticket_programming_language_id, practice_ticket_student_id)
+VALUES (36, 'landing page',
+        'интернет магазин с товарами, технологии - css(flexbox, grid, нельзя использовать float),html', '2022-05-22',
+        '2022-06-11', 2, 30, 2)on conflict do nothing;
+INSERT INTO public.practice_task (id, task_name, task_text, practice_ticket_begin_of_practice,
+                                  practice_ticket_end_of_practice, practice_ticket_mentor_id,
+                                  practice_ticket_programming_language_id, practice_ticket_student_id)
+VALUES (35, 'framework', 'что то вроде реакта', '2022-05-22', '2022-06-11', 2, 31, 2)on conflict do nothing;
 
 SELECT setval('hibernate_sequence', greatest(333, nextval('hibernate_sequence')))
 from practice_ticket
