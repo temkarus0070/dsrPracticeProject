@@ -158,14 +158,27 @@ databaseChangeLog:
             columnName: task_name
             tableName: practice_ticket
   - changeSet:
-      id: insert-practice-task-to-their-table
+      id: drop-foreign-keys-in-finalStudyReview
       author: temkarus0070
       preConditions:
         - onFail: MARK_RAN
-        - sqlCheck:
-            sql: select count(*) from practice_task
-            expectedResult: 0
+        - columnExists:
+            tableName: final_study_review
+            columnName: practice_ticket_mentor_id
       changes:
-        - sqlFile:
-            relativeToChangelogFile: true
-            path: ../practice_tasks.sql
+        - dropAllForeignKeyConstraints:
+            baseTableName: final_study_review
+        - dropColumn:
+            columns:
+              - column:
+                  name: practice_ticket_begin_of_practice
+              - column:
+                  name: practice_ticket_end_of_practice
+              - column:
+                  name: practice_ticket_mentor_id
+              - column:
+                  name: practice_ticket_programming_language_id
+              - column:
+                  name: practice_ticket_student_id
+            tableName: final_study_review
+            schemaName: public
