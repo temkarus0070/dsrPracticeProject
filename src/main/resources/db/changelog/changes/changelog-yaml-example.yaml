@@ -1,37 +1,16 @@
 databaseChangeLog:
   - changeSet:
-      id: rename-column-final-study-review-table-after-adding-table-for-programming-language
+      id: insert-init-data
       author: temkarus0070
       preConditions:
         - onFail: MARK_RAN
-          not:
-            columnExists:
-              tableName: final_study_review
-              columnName: practice_ticket_programming_language_name
-              schemaName: public
+        - sqlCheck:
+            sql: select count(*) from  student
+            expectedResult: 0
       changes:
-        - renameColumn:
-            oldColumnName: practice_ticket_programming_language
-            newColumnName: practice_ticket_programming_language_id
-            tableName: final_study_review
-            schemaName: public
-  - changeSet:
-      id: rename-column-weekly-study-review-table-after-adding-table-for-programming-language
-      author: temkarus0070
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            columnExists:
-              tableName: weekly_study_review
-              columnName: practice_ticket_programming_language_name
-              schemaName: public
-      changes:
-        - renameColumn:
-            oldColumnName: practice_ticket_programming_language
-            newColumnName: practice_ticket_programming_language_id
-            tableName: weekly_study_review
-            schemaName: public
-
+        - sqlFile:
+            relativeToChangelogFile: true
+            path: ../init-data.sql
   - changeSet:
       id: insert-prog-languages-at-special-table-from-tickets
       author: temkarus0070
@@ -73,10 +52,9 @@ databaseChangeLog:
       author: temkarus0070
       preConditions:
         - onFail: MARK_RAN
-          -not:
-            columnExists:
-              columnName: programming_language_id
-              tableName: practice_ticket
+          columnExists:
+            columnName: programming_language
+            tableName: practice_ticket
       changes:
         - dropAllForeignKeyConstraints:
             baseTableName: final_study_review
@@ -93,10 +71,9 @@ databaseChangeLog:
       author: temkarus0070
       preConditions:
         - onFail: MARK_RAN
-          -not:
-            columnExists:
-              columnName: programming_language_id
-              tableName: practice_ticket
+          columnExists:
+            columnName: programming_language
+            tableName: practice_ticket
       changes:
         - dropPrimaryKey:
             tableName: programming_language
@@ -112,10 +89,9 @@ databaseChangeLog:
       author: temkarus0070
       preConditions:
         - onFail: MARK_RAN
-          -not:
-            columnExists:
-              columnName: programming_language_id
-              tableName: practice_ticket
+          columnExists:
+            columnName: programming_language
+            tableName: practice_ticket
       changes:
         - dropAllForeignKeyConstraints:
             baseTableName: final_study_review
