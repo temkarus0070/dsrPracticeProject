@@ -1,14 +1,8 @@
 package org.temkarus0070.dsrpracticeproject.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
-@Getter
-@Setter
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"task_name", "task_text"})})
 public class PracticeTask {
     @Id
@@ -19,20 +13,38 @@ public class PracticeTask {
     private String taskName;
     @Column(name = "task_text")
     private String taskText;
-    @OneToOne(mappedBy = "practiceTask")
+    @OneToOne()
     private PracticeTicket practiceTicket;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PracticeTask)) return false;
-        PracticeTask that = (PracticeTask) o;
-        return id == that.getId();
+    public long getId() {
+        return id;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void setId(long id) {
+        this.id = id;
     }
 
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    public String getTaskText() {
+        return taskText;
+    }
+
+    public void setTaskText(String taskText) {
+        this.taskText = taskText;
+    }
+
+    public PracticeTicket getPracticeTicket() {
+        return practiceTicket;
+    }
+
+    public void setPracticeTicket(PracticeTicket practiceTicket) {
+        this.practiceTicket = practiceTicket;
+    }
 }

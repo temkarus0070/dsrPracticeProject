@@ -182,3 +182,17 @@ databaseChangeLog:
                   name: practice_ticket_student_id
             tableName: final_study_review
             schemaName: public
+  - changeSet:
+      id: add_tasks_fk_to_practiceTicket_and_remove_task_fk_from_practiceTicket
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+        - columnExists:
+            columnName: practice_task_id
+            tableName: practice_ticket
+      changes:
+        - sql:
+            sql: update practice_task pt set practice_ticket_begin_of_practice=p.begin_of_practice, practice_ticket_end_of_practice=p.end_of_practice , practice_ticket_programming_language_id=p.programming_language_id , practice_ticket_mentor_id=p.mentor_id , practice_ticket_student_id=p.student_id from practice_task pt1 inner join practice_ticket p on id = p.practice_task_id where pt.id=p.practice_task_id
+        - dropColumn:
+            columnName: practice_task_id
+            tableName: practice_ticket

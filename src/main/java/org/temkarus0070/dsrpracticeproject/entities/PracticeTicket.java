@@ -31,13 +31,13 @@ public class PracticeTicket {
     @MapsId(value = "studentId")
     private Student student;
 
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "practiceTicket")
     private PracticeTask practiceTask;
 
-    @OneToMany(mappedBy = "practiceTicket", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "practiceTicket", cascade = CascadeType.ALL)
     private Set<WeeklyStudyReview> weeklyMentorReviews;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     private FinalStudyReview finalMentorReview;
 
     private boolean recommendToHire;

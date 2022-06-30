@@ -15,6 +15,7 @@ public class PracticeTicketService {
     private PracticeTicketRepository practiceTicketRepository;
 
     public void add(PracticeTicket practiceTicket) {
+        practiceTicket.getPracticeTask().setPracticeTicket(practiceTicket);
         practiceTicketRepository.save(practiceTicket);
     }
 
