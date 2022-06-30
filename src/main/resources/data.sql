@@ -134,4 +134,4 @@ where begin_of_practice = date '2022-05-22'
 
 SELECT setval('hibernate_sequence', 333)
 from practice_ticket
-where 5 = (select count(*) from practice_ticket);
+where 4 = (select count(*) from practice_ticket);
