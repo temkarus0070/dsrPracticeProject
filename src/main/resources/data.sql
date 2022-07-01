@@ -23,19 +23,6 @@ VALUES ('JS', 31)on conflict do nothing;
 INSERT INTO public.programming_language (name, id)
 VALUES ('Java', 32)on conflict do nothing;
 
-INSERT INTO public.practice_task (task_name, task_text, id)
-VALUES ('calculator', 'операции:плюс, минус, умножить', 34)on conflict do nothing;
-INSERT INTO public.practice_task (task_name, task_text, id)
-VALUES ('framework', 'что то вроде реакта', 35)on conflict do nothing;
-INSERT INTO public.practice_task (task_name, task_text, id)
-VALUES ('landing page',
-        'интернет магазин с товарами, технологии - css(flexbox, grid, нельзя использовать float),html',
-        36)on conflict do nothing;
-
-INSERT INTO public.practice_task (task_name, task_text, id)
-VALUES ('landing page',
-        'кофейня',
-        37)on conflict do nothing;
 
 INSERT INTO public.practice_ticket (begin_of_practice, end_of_practice, programming_language_id, final_mark,
                                     recommend_to_hire, student_id, mentor_id, final_mentor_review_id)
