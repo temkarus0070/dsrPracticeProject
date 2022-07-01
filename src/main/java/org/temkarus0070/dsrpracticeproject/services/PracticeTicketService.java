@@ -40,6 +40,7 @@ public List<PracticeTicketView> getAllTicketsAssignedToStudent(long id) {
         practiceTicket1.setFinalMark(practiceTicket.getFinalMark());
         practiceTicket1.setRecommendToHire(practiceTicket.isRecommendToHire());
         practiceTicket1.setPracticeTask(practiceTicket.getPracticeTask());
+        practiceTicket.getPracticeTask().setPracticeTicket(practiceTicket1);
         practiceTicket1.setWeeklyMentorReviews(practiceTicket.getWeeklyMentorReviews());
         practiceTicket1.setFinalMentorReview(practiceTicket.getFinalMentorReview());
         practiceTicketRepository.save(practiceTicket1);

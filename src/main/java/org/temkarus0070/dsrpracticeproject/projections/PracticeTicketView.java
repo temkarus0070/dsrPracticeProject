@@ -32,6 +32,8 @@ public interface PracticeTicketView {
     }
 
     public interface TaskProjection {
+        public long getId();
+
         public String getTaskName();
 
         public String getTaskText();
