@@ -37,7 +37,7 @@ public class PracticeTicket {
     @OneToMany(mappedBy = "practiceTicket", cascade = CascadeType.ALL)
     private Set<WeeklyStudyReview> weeklyMentorReviews;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "practiceTicket")
     private FinalStudyReview finalMentorReview;
 
     private boolean recommendToHire;

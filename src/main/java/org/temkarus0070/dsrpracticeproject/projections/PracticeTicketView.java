@@ -29,6 +29,12 @@ public interface PracticeTicketView {
         long getId();
 
         String getTextReview();
+
+        LightPracticeTicketProjection getPracticeTicket();
+    }
+
+    interface LightPracticeTicketProjection {
+        PracticeTicket.PracticeTicketId getId();
     }
 
     public interface TaskProjection {

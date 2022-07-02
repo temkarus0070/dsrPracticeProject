@@ -12,7 +12,7 @@ import java.util.Objects;
 @Getter
 @Setter
 public class FinalStudyReview extends StudyReview {
-    @OneToOne(mappedBy = "finalMentorReview", optional = false)
+    @OneToOne(optional = false)
     private PracticeTicket practiceTicket;
 
     @Override

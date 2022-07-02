@@ -24,18 +24,18 @@ INSERT INTO public.programming_language (name, id)
 VALUES ('Java', 32)on conflict do nothing;
 
 
-INSERT INTO public.practice_ticket (begin_of_practice, end_of_practice, programming_language_id, final_mark,
-                                    recommend_to_hire, student_id, mentor_id, final_mentor_review_id)
-VALUES ('2022-06-01', '2022-07-01', 32, null, false, 1, 1, null)on conflict do nothing;
-INSERT INTO public.practice_ticket (begin_of_practice, end_of_practice, programming_language_id, final_mark,
-                                    recommend_to_hire, student_id, mentor_id, final_mentor_review_id)
-VALUES ('2022-05-22', '2022-06-11', 31, null, false, 2, 2, null)on conflict do nothing;
-INSERT INTO public.practice_ticket (begin_of_practice, end_of_practice, programming_language_id, final_mark,
-                                    recommend_to_hire, student_id, mentor_id, final_mentor_review_id)
-VALUES ('2022-05-22', '2022-06-11', 30, 3, false, 3, 2, null)on conflict do nothing;
-INSERT INTO public.practice_ticket (begin_of_practice, end_of_practice, programming_language_id, final_mark,
-                                    recommend_to_hire, student_id, mentor_id, final_mentor_review_id)
-VALUES ('2022-05-22', '2022-06-11', 30, 2, true, 2, 2, null)on conflict do nothing;
+INSERT INTO public.practice_ticket (begin_of_practice, end_of_practice, final_mark, recommend_to_hire, student_id,
+                                    programming_language_id, mentor_id)
+VALUES ('2022-06-01', '2022-07-01', 1, true, 1, 32, 1)on conflict do nothing;
+INSERT INTO public.practice_ticket (begin_of_practice, end_of_practice, final_mark, recommend_to_hire, student_id,
+                                    programming_language_id, mentor_id)
+VALUES ('2022-05-22', '2022-06-11', 3, false, 3, 30, 2)on conflict do nothing;
+INSERT INTO public.practice_ticket (begin_of_practice, end_of_practice, final_mark, recommend_to_hire, student_id,
+                                    programming_language_id, mentor_id)
+VALUES ('2022-05-22', '2022-06-11', 2, true, 2, 30, 2)on conflict do nothing;
+INSERT INTO public.practice_ticket (begin_of_practice, end_of_practice, final_mark, recommend_to_hire, student_id,
+                                    programming_language_id, mentor_id)
+VALUES ('2022-05-22', '2022-06-11', null, false, 2, 31, 2)on conflict do nothing;
 
 
 
@@ -81,12 +81,15 @@ INSERT INTO public.weekly_study_review (id, text_review, practice_ticket_begin_o
 VALUES (4, 'все хорошо', '2022-06-01', '2022-07-01', 1, 32, 1)on conflict do nothing;
 
 
-INSERT INTO public.final_study_review (id, text_review)
-VALUES (3, 'все классно')on conflict do nothing;
-INSERT INTO public.final_study_review (id, text_review)
-VALUES (2, 'все классно')on conflict do nothing;
-INSERT INTO public.final_study_review (id, text_review)
-VALUES (1, 'все классно')on conflict do nothing;
+INSERT INTO public.final_study_review (id, text_review, practice_ticket_begin_of_practice,
+                                       practice_ticket_end_of_practice, practice_ticket_student_id,
+                                       practice_ticket_mentor_id, practice_ticket_programming_language_id)
+VALUES (3, 'все классно', '2022-05-22', '2022-06-11', 3, 2, 30)on conflict do nothing;
+INSERT INTO public.final_study_review (id, text_review, practice_ticket_begin_of_practice,
+                                       practice_ticket_end_of_practice, practice_ticket_student_id,
+                                       practice_ticket_mentor_id, practice_ticket_programming_language_id)
+VALUES (2, 'все классно', '2022-05-22', '2022-06-11', 2, 2, 30)on conflict do nothing;
+
 
 
 UPDATE practice_ticket

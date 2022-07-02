@@ -196,3 +196,55 @@ databaseChangeLog:
         - dropColumn:
             columnName: practice_task_id
             tableName: practice_ticket
+  - changeSet:
+      id: add_cols_to_fk_from_finalReview_to_practiceTicket
+      author: temkarus0070
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - columnExists:
+                columnName: practice_ticket_begin_of_practice
+                tableName: final_study_review
+      changes:
+        - addColumn:
+            tableName: final_study_review
+            columns:
+              - column:
+                  name: practice_ticket_begin_of_practice
+                  type: date
+              - column:
+                  name: practice_ticket_end_of_practice
+                  type: date
+              - column:
+                  name: practice_ticket_student_id
+                  type: int8
+              - column:
+                  name: practice_ticket_mentor_id
+                  type: int8
+              - column:
+                  name: practice_ticket_programming_language_id
+                  type: int8
+  - changeSet:
+      id: fill_all_fk_in_finalStudyReview
+      author: temkarus0070
+      preConditions:
+        - sqlCheck:
+            expectedResult: 1
+            sql: select max(1) from final_study_review fr where fr.practice_ticket_mentor_id is null
+      changes:
+        - sql:
+            sql: update final_study_review pt set practice_ticket_begin_of_practice=p.begin_of_practice, practice_ticket_end_of_practice=p.end_of_practice , practice_ticket_programming_language_id=p.programming_language_id , practice_ticket_mentor_id=p.mentor_id , practice_ticket_student_id=p.student_id from final_study_review pt1 inner join practice_ticket p on id = p.final_mentor_review_id where pt.id=p.final_mentor_review_id
+  - changeSet:
+      id: remove_notUsed_fk_from_practiceTicket
+      author: temkarus0070
+      preConditions:
+        - columnExists:
+            columnName: final_mentor_review_id
+            tableName: practice_ticket
+      changes:
+        - dropForeignKeyConstraint:
+            constraintName: fk4wow6imep6acspypjyyolshnd
+            baseTableName: practice_ticket
+        - dropColumn:
+            columnName: final_mentor_review_id
+            tableName: practice_ticket
