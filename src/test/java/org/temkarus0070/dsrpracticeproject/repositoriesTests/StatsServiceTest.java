@@ -9,6 +9,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.temkarus0070.dsrpracticeproject.projections.MentorStudentsStatsView;
 import org.temkarus0070.dsrpracticeproject.projections.PracticeResultView;
+import org.temkarus0070.dsrpracticeproject.projections.ProgrammingLanguageStatsView;
 import org.temkarus0070.dsrpracticeproject.services.StatsService;
 
 import java.time.LocalDate;
@@ -77,6 +78,24 @@ public class StatsServiceTest {
         List<PracticeResultView> practiceResults = statsService.getRatingOfStudents(LocalDate.of(2022, 05, 22), LocalDate.of(2022, 06, 11));
         Assertions.assertEquals(practiceResults.size(), 3);
         Assertions.assertEquals(practiceResults.stream().filter(e -> !e.isRecommendToHire()).count(), 2);
+    }
+
+    @Test
+    public void testProgLanguagesStats() {
+        List<ProgrammingLanguageStatsView> statsByProgrammingLanguage = statsService.getStatsByProgrammingLanguage(LocalDate.ofYearDay(2021, 31), LocalDate.ofYearDay(2023, 12));
+        Assertions.assertEquals(statsByProgrammingLanguage.size(), 3);
+        Assertions.assertEquals(statsByProgrammingLanguage.stream().filter(e -> e.getLanguage().equalsIgnoreCase("html")).findFirst().get().getCount(), 2);
+        Assertions.assertEquals(statsByProgrammingLanguage.stream().filter(e -> e.getLanguage().equalsIgnoreCase("js")).findFirst().get().getCount(), 1);
+        Assertions.assertEquals(statsByProgrammingLanguage.stream().filter(e -> e.getLanguage().equalsIgnoreCase("java")).findFirst().get().getCount(), 1);
+    }
+
+    @Test
+    public void testProgLanguagesStatsWithPeriod() {
+        List<ProgrammingLanguageStatsView> statsByProgrammingLanguage = statsService.getStatsByProgrammingLanguage(LocalDate.of(2022, 05, 22), LocalDate.of(2022, 06, 11));
+        Assertions.assertEquals(statsByProgrammingLanguage.size(), 3);
+        Assertions.assertEquals(statsByProgrammingLanguage.stream().filter(e -> e.getLanguage().equalsIgnoreCase("html")).findFirst().get().getCount(), 2);
+        Assertions.assertEquals(statsByProgrammingLanguage.stream().filter(e -> e.getLanguage().equalsIgnoreCase("js")).findFirst().get().getCount(), 1);
+        Assertions.assertEquals(statsByProgrammingLanguage.stream().filter(e -> e.getLanguage().equalsIgnoreCase("java")).findFirst().get().getCount(), 0);
     }
 
 
