@@ -92,29 +92,6 @@ VALUES (2, 'все классно', '2022-05-22', '2022-06-11', 2, 2, 30)on conf
 
 
 
-UPDATE practice_ticket
-set final_mentor_review_id=3
-where begin_of_practice = date '2022-05-22'
-  and end_of_practice = date '2022-06-11'
-  and mentor_id = 2
-  and programming_language_id = 30
-  and student_id = 3;
-
-UPDATE practice_ticket
-set final_mentor_review_id=2
-where begin_of_practice = date '2022-05-22'
-  and end_of_practice = date '2022-06-11'
-  and mentor_id = 2
-  and programming_language_id = 30
-  and student_id = 2;
-
-UPDATE practice_ticket
-set final_mentor_review_id=2
-where begin_of_practice = date '2022-05-22'
-  and end_of_practice = date '2022-06-11'
-  and mentor_id = 2
-  and programming_language_id = 31
-  and student_id = 2;
 /*
  SET next sequence value if not set before to right work sequence generation after insert init-data.sql rows
  3 is max student id in init-data.sql rows

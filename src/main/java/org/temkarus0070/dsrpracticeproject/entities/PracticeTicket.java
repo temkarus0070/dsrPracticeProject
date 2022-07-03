@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NamedEntityGraph(name = "practiceTickerGraph", includeAllAttributes = true)
+@Check(constraints = "begin_of_practice<end_of_practice")
 public class PracticeTicket {
     @ManyToOne
     @MapsId("programmingLanguageId")
