@@ -19,7 +19,7 @@ public class StatsService {
     private PracticeTicketRepository practiceTicketRepository;
 
     public List<PracticeResultView> getRatingOfStudents(LocalDate practiceBegin, LocalDate practiceEnd) {
-        return practiceTicketRepository.findAllById_BeginOfPracticeIsAndId_EndOfPracticeIsLessThanEqualOrderByRecommendToHireDescFinalMarkDesc(practiceBegin, practiceEnd);
+        return practiceTicketRepository.findAllById_BeginOfPracticeIsGreaterThanEqualAndId_EndOfPracticeIsLessThanEqualOrderByRecommendToHireDescFinalMarkDesc(practiceBegin, practiceEnd);
     }
 
     public List<MentorStudentsStatsView> getStatsByMentors(LocalDate practiceBegin, LocalDate practiceEnd) {

@@ -93,8 +93,8 @@ VALUES (2, 'все классно', '2022-05-22', '2022-06-11', 2, 2, 30)on conf
 
 
 /*
- SET next sequence value if not set before to right work sequence generation after insert init-data.sql rows
- 3 is max student id in init-data.sql rows
+ SET next sequence value if not set before to right work sequence generation after insert init-init-data.sql rows
+ 3 is max student id in init-init-data.sql rows
  */
 
 INSERT INTO public.practice_task (id, task_name, task_text, practice_ticket_begin_of_practice,
