@@ -24,6 +24,11 @@ public class MentorController {
         return mentorService.getAll();
     }
 
+    @GetMapping("/new")
+    public List<MentorView> getNewlyRegistratedMentors() {
+        return mentorService.getNewlyRegistrated();
+    }
+
     @PostMapping
     public void create(@RequestBody Mentor mentor) {
         mentorService.add(mentor);

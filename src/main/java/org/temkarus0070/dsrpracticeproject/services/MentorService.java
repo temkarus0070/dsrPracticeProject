@@ -23,6 +23,14 @@ public class MentorService {
         return mentorRepository.findMentorById(id);
     }
 
+    public Mentor getMentor(long id) {
+        return mentorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("не найдено ментора с таким id"));
+    }
+
+    public List<MentorView> getNewlyRegistrated() {
+        return mentorRepository.findAllByUserIsNotNullAndUser_ActiveIsFalse();
+    }
+
     public List<MentorView> getAll() {
         return mentorRepository.findAllBy();
     }

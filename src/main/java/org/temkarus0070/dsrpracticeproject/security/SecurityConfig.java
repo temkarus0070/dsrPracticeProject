@@ -42,14 +42,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests().anyRequest().authenticated().and().csrf().disable()
+        http.authorizeHttpRequests().and()
+                .authorizeHttpRequests().mvcMatchers("/register")
+                .permitAll().and()
+                .authorizeHttpRequests().anyRequest().authenticated()
+                .and().csrf().disable()
+                .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfiguration()))
                 .httpBasic().disable()
                 .formLogin()
                 .disable()
                 .addFilter(jwtFilter)
                 .addFilter(usernamePasswordFilter)
                 .authenticationProvider(jwtAuthProvider)
-                .authenticationProvider(usernameAuthProvider);
+                .authenticationProvider(usernameAuthProvider)
+                .anonymous();
     }
 
     @Bean
@@ -64,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         corsConfiguration.setAllowedOrigins(Collections.singletonList(frontendUrl));
         corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
         corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
-        corsConfiguration.setExposedHeaders(Arrays.asList("refreshToken", "token"));
+        corsConfiguration.setExposedHeaders(Arrays.asList("refreshToken", "token", "Authorization"));
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
         return urlBasedCorsConfigurationSource;

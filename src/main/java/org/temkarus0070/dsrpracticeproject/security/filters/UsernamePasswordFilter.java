@@ -34,6 +34,7 @@ public class UsernamePasswordFilter extends UsernamePasswordAuthenticationFilter
         });
     }
 
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String username = request.getHeader("username");

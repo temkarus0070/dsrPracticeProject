@@ -20,15 +20,17 @@ import java.util.stream.Collectors;
 public class User {
     @Id
     private String username;
-    private String fullName;
     @NotNull
     private String password;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
+    private boolean active;
+
     public User(UserDetails userDetails) {
         this.username = userDetails.getUsername();
         this.password = userDetails.getPassword();
         this.roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+        this.active = userDetails.isEnabled();
     }
 }

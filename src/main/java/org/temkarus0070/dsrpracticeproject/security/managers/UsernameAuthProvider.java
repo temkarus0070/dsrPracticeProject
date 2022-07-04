@@ -25,7 +25,7 @@ public class UsernameAuthProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UserDetails user = userService.loadUserByUsername(authentication.getName());
         boolean passwordsMatches = passwordEncoder.matches((CharSequence) authentication.getCredentials(), user.getPassword());
-        if (passwordsMatches) {
+        if (passwordsMatches && user.isEnabled()) {
             return new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
         }
         throw new BadCredentialsException("Невеный логин или пароль");

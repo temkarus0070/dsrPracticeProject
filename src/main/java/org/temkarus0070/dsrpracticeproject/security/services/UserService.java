@@ -34,6 +34,7 @@ public class UserService implements UserDetailsManager {
     public void updateUser(UserDetails user) {
         User user1 = userRepository.findById(user.getUsername()).orElseThrow(() -> new UsernameNotFoundException("не существует пользователя с таким именем"));
         user1.setRoles(user.getAuthorities().stream().map(e -> e.getAuthority()).collect(Collectors.toList()));
+        user1.setActive(user.isEnabled());
         userRepository.save(user1);
     }
 
@@ -73,23 +74,27 @@ public class UserService implements UserDetailsManager {
 
             @Override
             public boolean isAccountNonExpired() {
-                return true;
+                return user.isActive();
             }
 
             @Override
             public boolean isAccountNonLocked() {
-                return true;
+                return user.isActive();
             }
 
             @Override
             public boolean isCredentialsNonExpired() {
-                return true;
+                return user.isActive();
             }
 
             @Override
             public boolean isEnabled() {
-                return true;
+                return user.isActive();
             }
         };
+    }
+
+    public User get(String login) {
+        return userRepository.findById(login).orElseThrow(() -> new UsernameNotFoundException("не найдено пользователя с таким именем"));
     }
 }
