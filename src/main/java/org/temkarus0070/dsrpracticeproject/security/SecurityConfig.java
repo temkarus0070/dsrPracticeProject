@@ -24,6 +24,7 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
+
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${application.frontend-address}")
     private String frontendUrl;

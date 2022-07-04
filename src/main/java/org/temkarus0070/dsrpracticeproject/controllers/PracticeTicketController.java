@@ -1,6 +1,7 @@
 package org.temkarus0070.dsrpracticeproject.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.temkarus0070.dsrpracticeproject.entities.PracticeTicket;
 import org.temkarus0070.dsrpracticeproject.projections.PracticeTicketView;
@@ -27,10 +28,12 @@ public class PracticeTicketController {
         return all;
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/practice-tickets")
     public void create(@RequestBody PracticeTicket practiceTicket) {
         practiceTicketService.add(practiceTicket);
     }
+
 
     @GetMapping("/mentors/{id}/practice-tickets")
     public List<PracticeTicketView> practiceTicketsOfMentor(@PathVariable long id) {
@@ -46,6 +49,7 @@ public class PracticeTicketController {
     public void update(@RequestBody PracticeTicket practiceTicket) {
         practiceTicketService.update(practiceTicket);
     }
+
 
     @DeleteMapping("/practice-tickets")
     public void delete(@RequestParam long mentorId, @RequestParam long studentId, @RequestParam long programmingLanguageId, @RequestParam LocalDate beginOfPractice,

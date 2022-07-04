@@ -44,6 +44,10 @@ public class MentorService {
         mentorRepository.save(mentor1);
     }
 
+    public Mentor getMentorFromUsername(String login) {
+        return mentorRepository.findByUserIsNotNullAndUser_Username(login);
+    }
+
     public void delete(long id) {
         mentorRepository.deleteById(id);
     }

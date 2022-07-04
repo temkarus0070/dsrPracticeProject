@@ -14,4 +14,6 @@ public interface MentorRepository extends JpaRepository<Mentor, Long> {
     public List<MentorView> findAllBy();
 
     public List<MentorView> findAllByUserIsNotNullAndUser_ActiveIsFalse();
+
+    public Mentor findByUserIsNotNullAndUser_Username(String login);
 }

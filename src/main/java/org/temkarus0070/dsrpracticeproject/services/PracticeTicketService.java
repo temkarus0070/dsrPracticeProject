@@ -1,6 +1,8 @@
 package org.temkarus0070.dsrpracticeproject.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.temkarus0070.dsrpracticeproject.entities.PracticeTicket;
 import org.temkarus0070.dsrpracticeproject.projections.PracticeTicketView;
@@ -13,6 +15,8 @@ import java.util.List;
 public class PracticeTicketService {
     @Autowired
     private PracticeTicketRepository practiceTicketRepository;
+    @Autowired
+    private MentorService mentorService;
 
     public void add(PracticeTicket practiceTicket) {
         practiceTicket.getPracticeTask().setPracticeTicket(practiceTicket);
@@ -24,7 +28,12 @@ public class PracticeTicketService {
     }
 
     public List<PracticeTicketView> getAll() {
-        return practiceTicketRepository.findAllPracticeTicketBy();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getAuthorities().stream().filter(e -> e.getAuthority().equalsIgnoreCase("admin")).count() > 0) {
+            return practiceTicketRepository.findAllPracticeTicketBy();
+        } else
+            return getAllTicketsAssignedToMentor(mentorService.getMentorFromUsername(authentication.getName()).getId());
+
     }
 
     public List<PracticeTicketView> getAllTicketsAssignedToMentor(long mentorId) {

@@ -2,6 +2,7 @@ package org.temkarus0070.dsrpracticeproject.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.temkarus0070.dsrpracticeproject.entities.ProgrammingLanguage;
@@ -14,6 +15,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController()
+
 @RequestMapping("/programming-languages")
 public class ProgrammingLanguagesController {
     @Autowired
@@ -33,6 +35,7 @@ public class ProgrammingLanguagesController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity create(@RequestBody ProgrammingLanguage programmingLanguage, HttpServletRequest request) throws URISyntaxException {
         programmingLanguagesService.create(programmingLanguage);
         String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)

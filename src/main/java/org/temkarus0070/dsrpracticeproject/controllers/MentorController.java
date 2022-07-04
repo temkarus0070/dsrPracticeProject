@@ -1,6 +1,7 @@
 package org.temkarus0070.dsrpracticeproject.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.temkarus0070.dsrpracticeproject.entities.Mentor;
 import org.temkarus0070.dsrpracticeproject.projections.MentorView;
@@ -8,6 +9,7 @@ import org.temkarus0070.dsrpracticeproject.services.MentorService;
 
 import java.util.List;
 
+@PreAuthorize("hasAuthority('admin')")
 @RestController
 @RequestMapping("/mentors")
 public class MentorController {

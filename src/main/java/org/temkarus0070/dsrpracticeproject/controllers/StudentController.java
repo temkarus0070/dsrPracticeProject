@@ -1,6 +1,7 @@
 package org.temkarus0070.dsrpracticeproject.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.temkarus0070.dsrpracticeproject.entities.Student;
 import org.temkarus0070.dsrpracticeproject.projections.StudentView;
@@ -9,6 +10,7 @@ import org.temkarus0070.dsrpracticeproject.services.StudentService;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAuthority('admin')")
 @RequestMapping("/students")
 public class StudentController {
     @Autowired
