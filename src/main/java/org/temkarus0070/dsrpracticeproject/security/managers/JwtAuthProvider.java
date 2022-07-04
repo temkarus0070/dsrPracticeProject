@@ -18,11 +18,16 @@ public class JwtAuthProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        boolean validToken = jwtService.isValidToken(authentication.getCredentials().toString());
-        if (validToken) {
-            UserDetails user = jwtService.getUser(authentication.getCredentials().toString());
-            return new UsernamePasswordAuthenticationToken(user.getUsername(), authentication.getCredentials(), user.getAuthorities());
-        } else throw new BadCredentialsException("неверный токен");
+        try {
+            boolean validToken = jwtService.isValidToken(authentication.getCredentials().toString());
+            if (validToken) {
+                UserDetails user = jwtService.getUser(authentication.getCredentials().toString());
+                return new UsernamePasswordAuthenticationToken(user.getUsername(), authentication.getCredentials(), user.getAuthorities());
+            } else throw new BadCredentialsException("неверный токен");
+        } catch (Exception exception) {
+            throw new BadCredentialsException(exception.getMessage());
+        }
+
     }
 
     @Override
