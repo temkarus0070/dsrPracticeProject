@@ -10,6 +10,7 @@ import org.temkarus0070.dsrpracticeproject.repositories.PracticeTicketRepository
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PracticeTicketService {
@@ -57,6 +58,13 @@ public List<PracticeTicketView> getAllTicketsAssignedToStudent(long id) {
     }
 
     public void delete(PracticeTicket.PracticeTicketId id) {
-        practiceTicketRepository.deleteById(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<PracticeTicket> byId = practiceTicketRepository.findById(id);
+        if (byId.isPresent()) {
+            if (authentication.getName().equals(byId.get().getMentor().getUser().getUsername()) || authentication.getAuthorities().stream().filter(e -> e.getAuthority().equals("admin")).count() > 0) {
+                practiceTicketRepository.deleteById(id);
+            }
+        }
+
     }
 }
