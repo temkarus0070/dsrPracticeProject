@@ -10,8 +10,8 @@ import org.hibernate.annotations.Check;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -37,7 +37,7 @@ public class PracticeTicket {
     private PracticeTask practiceTask;
 
     @OneToMany(mappedBy = "practiceTicket", cascade = CascadeType.ALL)
-    private Set<WeeklyStudyReview> weeklyMentorReviews;
+    private List<WeeklyStudyReview> weeklyMentorReviews;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "practiceTicket")
     private FinalStudyReview finalMentorReview;
