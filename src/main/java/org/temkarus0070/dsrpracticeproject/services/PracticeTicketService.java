@@ -19,7 +19,8 @@ public class PracticeTicketService {
     private MentorService mentorService;
 
     public void add(PracticeTicket practiceTicket) {
-        practiceTicket.getPracticeTask().setPracticeTicket(practiceTicket);
+        if (practiceTicket.getPracticeTask() != null)
+            practiceTicket.getPracticeTask().setPracticeTicket(practiceTicket);
         practiceTicketRepository.save(practiceTicket);
     }
 
@@ -29,7 +30,7 @@ public class PracticeTicketService {
 
     public List<PracticeTicketView> getAll() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getAuthorities().stream().filter(e -> e.getAuthority().equalsIgnoreCase("admin")).count() > 0) {
+        if (authentication != null && authentication.getAuthorities().stream().filter(e -> e.getAuthority().equalsIgnoreCase("admin")).count() > 0) {
             return practiceTicketRepository.findAllPracticeTicketBy();
         } else
             return getAllTicketsAssignedToMentor(mentorService.getMentorFromUsername(authentication.getName()).getId());
