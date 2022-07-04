@@ -5,15 +5,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -43,28 +39,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtFilter jwtFilter;
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        super.configure(web);
-    }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder = authenticationManagerBuilder.authenticationProvider(jwtAuthProvider)
-                .authenticationProvider(usernameAuthProvider);
-        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
-        HttpSecurity httpSecurity = http.cors().configurationSource(corsConfiguration()).and().authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry.anyRequest().authenticated()).csrf().disable()
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests().anyRequest().authenticated().and().csrf().disable()
                 .httpBasic().disable()
                 .formLogin()
                 .disable()
                 .addFilter(jwtFilter)
                 .addFilter(usernamePasswordFilter)
-                .authenticationManager(authenticationManager)
                 .authenticationProvider(jwtAuthProvider)
                 .authenticationProvider(usernameAuthProvider);
+    }
 
-        return httpSecurity.build();
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Bean
@@ -85,9 +76,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
 
 }
