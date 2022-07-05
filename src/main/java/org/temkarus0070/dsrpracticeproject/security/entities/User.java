@@ -25,6 +25,9 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<JWTUser> jwtUsers = new ArrayList<>();
+
     private boolean active;
 
     public User(UserDetails userDetails) {

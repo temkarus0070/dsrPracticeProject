@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 import org.temkarus0070.dsrpracticeproject.security.entities.User;
+import org.temkarus0070.dsrpracticeproject.security.projections.UserProjection;
 import org.temkarus0070.dsrpracticeproject.security.repositories.UserRepository;
 
 import java.util.Collection;
@@ -94,7 +95,7 @@ public class UserService implements UserDetailsManager {
         };
     }
 
-    public User get(String login) {
-        return userRepository.findById(login).orElseThrow(() -> new UsernameNotFoundException("не найдено пользователя с таким именем"));
+    public UserProjection get(String login) {
+        return userRepository.findUserByUsername(login).orElseThrow(() -> new UsernameNotFoundException("не найдено пользователя с таким именем"));
     }
 }

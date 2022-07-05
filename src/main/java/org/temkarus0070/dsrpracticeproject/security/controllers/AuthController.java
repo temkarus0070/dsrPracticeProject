@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.temkarus0070.dsrpracticeproject.entities.Mentor;
 import org.temkarus0070.dsrpracticeproject.security.entities.User;
+import org.temkarus0070.dsrpracticeproject.security.projections.UserProjection;
 import org.temkarus0070.dsrpracticeproject.security.services.UserService;
 import org.temkarus0070.dsrpracticeproject.services.MentorService;
 
@@ -23,7 +24,7 @@ public class AuthController {
     private MentorService mentorService;
 
     @GetMapping("/current-user")
-    public User checkAuth() {
+    public UserProjection checkAuth() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userService.get(authentication.getName());
     }

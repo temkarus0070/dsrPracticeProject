@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.temkarus0070.dsrpracticeproject.entities.Mentor;
 import org.temkarus0070.dsrpracticeproject.projections.MentorView;
 import org.temkarus0070.dsrpracticeproject.repositories.MentorRepository;
+import org.temkarus0070.dsrpracticeproject.security.entities.User;
+import org.temkarus0070.dsrpracticeproject.security.services.UserService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.Optional;
 public class MentorService {
     @Autowired
     private MentorRepository mentorRepository;
+    @Autowired
+    private UserService userService;
 
     public void add(Mentor mentor) {
         mentorRepository.save(mentor);
@@ -49,6 +53,8 @@ public class MentorService {
     }
 
     public void delete(long id) {
+        User user = mentorRepository.findById(id).get().getUser();
         mentorRepository.deleteById(id);
+        userService.deleteUser(user.getUsername());
     }
 }
