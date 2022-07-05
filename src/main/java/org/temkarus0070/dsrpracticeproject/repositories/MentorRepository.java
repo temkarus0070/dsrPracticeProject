@@ -11,7 +11,7 @@ import java.util.List;
 public interface MentorRepository extends JpaRepository<Mentor, Long> {
     public MentorView findMentorById(long id);
 
-    public List<MentorView> findAllBy();
+    public List<MentorView> findAllByUserIsNotNullAndUser_ActiveTrueOrUserIsNull();
 
     public List<MentorView> findAllByUserIsNotNullAndUser_ActiveIsFalse();
 

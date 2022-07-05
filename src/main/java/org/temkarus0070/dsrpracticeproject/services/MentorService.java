@@ -36,7 +36,7 @@ public class MentorService {
     }
 
     public List<MentorView> getAll() {
-        return mentorRepository.findAllBy();
+        return mentorRepository.findAllByUserIsNotNullAndUser_ActiveTrueOrUserIsNull();
     }
 
     public void update(Mentor mentor, long id) {
