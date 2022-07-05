@@ -61,7 +61,7 @@ public List<PracticeTicketView> getAllTicketsAssignedToStudent(long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<PracticeTicket> byId = practiceTicketRepository.findById(id);
         if (byId.isPresent()) {
-            if (authentication.getName().equals(byId.get().getMentor().getUser().getUsername()) || authentication.getAuthorities().stream().filter(e -> e.getAuthority().equals("admin")).count() > 0) {
+            if (authentication.getAuthorities().stream().filter(e -> e.getAuthority().equals("admin")).count() > 0 || authentication.getName().equals(byId.get().getMentor().getUser().getUsername())) {
                 practiceTicketRepository.deleteById(id);
             }
         }
