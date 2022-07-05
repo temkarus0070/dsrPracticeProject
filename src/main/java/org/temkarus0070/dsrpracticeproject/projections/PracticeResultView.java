@@ -8,4 +8,6 @@ public interface PracticeResultView {
     boolean isRecommendToHire();
 
     Mark getFinalMark();
+
+    ProgrammingLanguagesView getProgrammingLanguage();
 }
