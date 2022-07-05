@@ -45,7 +45,9 @@ public class StatsServiceTest {
         Assertions.assertEquals(statsByMentors.get(1).getSuccessStudentsCount(), 1);
 
         Assertions.assertTrue(statsByMentors.size() == 2);
-
+        statsByMentors = statsService.getStatsByMentors(LocalDate.ofYearDay(2019, 31), LocalDate.ofYearDay(2021, 12));
+        Assertions.assertTrue(statsByMentors.size() == 2);
+        Assertions.assertTrue(statsByMentors.stream().filter(e -> e.getStudentsCount() == 0).count() == 2);
     }
 
     @Test
