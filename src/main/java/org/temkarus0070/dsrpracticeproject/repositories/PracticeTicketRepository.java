@@ -22,9 +22,9 @@ public interface PracticeTicketRepository extends JpaRepository<PracticeTicket, 
 
     List<PracticeResultView> findAllById_BeginOfPracticeIsGreaterThanEqualAndId_EndOfPracticeIsLessThanEqualOrderByRecommendToHireDescFinalMarkDesc(LocalDate beginPractice, LocalDate endPractice);
 
-    @Query(value = "SELECT t.mentor.id as mentorId,t.mentor.fullName as fullName,count(t.id.studentId) as studentsCount,SUM(CASE when t.recommendToHire is true then  1 else 0 end)" +
+    @Query(value = "SELECT m.id as mentorId,m.fullName as fullName,count(t.id.studentId) as studentsCount,SUM(CASE when t.recommendToHire is true then  1 else 0 end)" +
             "as successStudentsCount" +
-            "  from PracticeTicket t WHERE t.id.beginOfPractice >= :beginPractice and t.id.endOfPractice<= :endPractice group by t.mentor.id,t.mentor.fullName")
+            "  from Mentor m left join PracticeTicket  t on t.mentor=m and (t.id.beginOfPractice >= :beginPractice and t.id.endOfPractice<= :endPractice) group by m.id,m.fullName")
     List<MentorStudentsStatsView> findStatsByMentors(LocalDate beginPractice, LocalDate endPractice);
 
 
